@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YURITTA — AI Study Platform</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#080c14;--bg2:#0d1220;--surface:#111827;--surface2:#1a2235;--surface3:#1f2d45;
@@ -15,82 +15,115 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-weight:300;display:flex;flex-direction:column;background-image:radial-gradient(ellipse 80% 50% at 20% -10%,rgba(59,130,246,0.07) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 110%,rgba(16,185,129,0.05) 0%,transparent 60%);}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-weight:300;display:flex;flex-direction:column;background-image:radial-gradient(ellipse 80% 50% at 20% -10%,rgba(59,130,246,0.07) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 110%,rgba(16,185,129,0.05) 0%,transparent 60%);}
 
+/* TOPBAR */
 .topbar{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;border-bottom:1px solid var(--border);background:rgba(8,12,20,0.92);backdrop-filter:blur(20px);flex-shrink:0;z-index:10;}
-.logo{display:flex;align-items:center;gap:0.6rem;font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;letter-spacing:0.08em;color:var(--text);}
-.logo-mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,var(--blue),var(--green));display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#fff;box-shadow:0 0 16px var(--blue-glow);}
+.logo{display:flex;align-items:center;gap:0.6rem;font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:800;letter-spacing:0.1em;color:var(--text);}
+.logo-mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,var(--blue),var(--green));display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fff;box-shadow:0 0 16px var(--blue-glow);}
 .subject-nav{display:flex;align-items:center;gap:0.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:0.25rem;}
-.sub-btn{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.06em;text-transform:uppercase;padding:0.35rem 0.9rem;border-radius:6px;border:none;background:none;color:var(--text2);cursor:pointer;transition:all 0.2s;}
+.sub-btn{font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.04em;text-transform:uppercase;padding:0.35rem 0.9rem;border-radius:6px;border:none;background:none;color:var(--text2);cursor:pointer;transition:all 0.2s;}
 .sub-btn:hover{color:var(--text);background:var(--surface2);}
 .sub-btn.active{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;box-shadow:0 2px 12px var(--blue-glow);}
 .topbar-right{display:flex;align-items:center;gap:0.5rem;}
-.nav-link{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--text2);text-decoration:none;padding:0.4rem 0.8rem;border-radius:6px;transition:all 0.2s;border:1px solid transparent;}
+.nav-link{font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--text2);text-decoration:none;padding:0.4rem 0.8rem;border-radius:6px;transition:all 0.2s;border:1px solid transparent;}
 .nav-link:hover{color:var(--blue);border-color:var(--border2);background:var(--blue-dim);}
 .status-dot{width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green-glow);animation:breathe 2.5s ease-in-out infinite;}
-@keyframes breathe{0%,100%{opacity:1;box-shadow:0 0 8px var(--green-glow);}50%{opacity:0.5;box-shadow:0 0 3px var(--green-glow);}}
+@keyframes breathe{0%,100%{opacity:1}50%{opacity:0.4}}
 
+/* LAYOUT */
 .app{display:flex;flex:1;overflow:hidden;}
 
-.sidebar{width:252px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;}
+/* SIDEBAR */
+.sidebar{width:256px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
+.sidebar::-webkit-scrollbar{width:3px;}.sidebar::-webkit-scrollbar-thumb{background:var(--border2);}
 .sidebar-block{padding:1rem;border-bottom:1px solid var(--border);}
-.block-label{font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text3);margin-bottom:0.75rem;}
+.block-label{font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text3);margin-bottom:0.75rem;}
+
+/* Upload */
 .upload-zone{border:1px dashed rgba(59,130,246,0.2);border-radius:10px;padding:1rem 0.8rem;text-align:center;cursor:pointer;transition:all 0.25s;position:relative;background:var(--blue-dim);}
 .upload-zone:hover{border-color:var(--blue);background:rgba(59,130,246,0.15);box-shadow:0 0 20px rgba(59,130,246,0.1);}
 .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;}
 .upload-ico{font-size:1.3rem;margin-bottom:0.4rem;display:block;}
-.upload-txt{font-size:0.72rem;color:var(--text2);line-height:1.4;}
-.upload-txt strong{color:var(--blue);display:block;font-weight:500;margin-bottom:0.1rem;}
-.doc-list{margin-top:0.6rem;display:flex;flex-direction:column;gap:0.35rem;max-height:130px;overflow-y:auto;}
-.doc-row{display:flex;align-items:center;gap:0.5rem;background:var(--surface2);border-radius:6px;padding:0.45rem 0.65rem;font-size:0.72rem;border:1px solid var(--border);animation:fadeSlide 0.3s ease;}
+.upload-txt{font-size:0.72rem;color:var(--text2);line-height:1.5;}
+.upload-txt strong{color:var(--blue);display:block;font-weight:600;margin-bottom:0.2rem;}
+.upload-txt small{font-size:0.65rem;color:var(--text3);}
+
+.doc-list{margin-top:0.6rem;display:flex;flex-direction:column;gap:0.35rem;max-height:160px;overflow-y:auto;}
+.doc-row{display:flex;align-items:center;gap:0.5rem;background:var(--surface2);border-radius:6px;padding:0.45rem 0.65rem;font-size:0.72rem;border:1px solid var(--border);animation:fadeSlide 0.3s ease;cursor:pointer;transition:all 0.2s;}
+.doc-row:hover{border-color:var(--blue);background:var(--blue-dim);}
+.doc-row.active-doc{border-color:var(--green);background:var(--green-dim);}
 @keyframes fadeSlide{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
 .doc-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.doc-badge{font-family:'JetBrains Mono',monospace;font-size:0.55rem;color:var(--green);background:var(--green-dim);padding:0.1rem 0.4rem;border-radius:3px;flex-shrink:0;}
-.topics{display:flex;flex-wrap:wrap;gap:0.35rem;}
-.topic-tag{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.04em;padding:0.3rem 0.6rem;border-radius:5px;background:var(--surface2);color:var(--text2);border:1px solid var(--border);cursor:pointer;transition:all 0.2s;}
-.topic-tag:hover,.topic-tag.active{background:var(--blue-dim);color:var(--blue);border-color:rgba(59,130,246,0.35);}
+.doc-badge{font-family:'Space Mono',monospace;font-size:0.52rem;color:var(--green);background:var(--green-dim);padding:0.1rem 0.4rem;border-radius:3px;flex-shrink:0;}
+
+/* Story mode btn */
+.story-btn{width:100%;margin-top:0.6rem;background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(59,130,246,0.15));border:1px solid rgba(16,185,129,0.25);color:var(--green);font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.06em;text-transform:uppercase;padding:0.55rem;border-radius:7px;cursor:pointer;transition:all 0.2s;display:none;}
+.story-btn:hover{background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(59,130,246,0.2));box-shadow:0 0 16px var(--green-glow);}
+.story-btn.visible{display:block;}
+
+/* Course list */
+.course-list{display:flex;flex-direction:column;gap:0.2rem;}
+.year-label{font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);padding:0.4rem 0.2rem 0.2rem;opacity:0.8;}
+.course-item{font-size:0.72rem;padding:0.35rem 0.6rem;border-radius:5px;background:var(--surface2);color:var(--text2);border:1px solid var(--border);cursor:pointer;transition:all 0.2s;line-height:1.3;}
+.course-item:hover,.course-item.active{background:var(--blue-dim);color:var(--blue);border-color:rgba(59,130,246,0.35);}
+
+/* Stats */
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;}
 .stat-tile{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.7rem 0.8rem;text-align:center;}
-.stat-val{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;background:linear-gradient(135deg,var(--blue),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;line-height:1.1;margin-bottom:0.2rem;}
-.stat-lbl{font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);}
+.stat-val{font-family:'Outfit',sans-serif;font-size:1.4rem;font-weight:700;background:linear-gradient(135deg,var(--blue),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;line-height:1.1;margin-bottom:0.2rem;}
+.stat-lbl{font-family:'Space Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);}
 
+/* CHAT */
 .chat-area{flex:1;display:flex;flex-direction:column;overflow:hidden;}
 .messages{flex:1;overflow-y:auto;padding:2rem;display:flex;flex-direction:column;gap:1.5rem;scroll-behavior:smooth;}
 .messages::-webkit-scrollbar{width:3px;}.messages::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
 
-.welcome{max-width:580px;margin:3rem auto;text-align:center;padding:0 1rem;}
+/* Welcome */
+.welcome{max-width:580px;margin:2.5rem auto;text-align:center;padding:0 1rem;}
 .welcome-glyph{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(16,185,129,0.15));border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 1.5rem;box-shadow:0 0 40px rgba(59,130,246,0.08);}
-.welcome h2{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;letter-spacing:-0.01em;margin-bottom:0.6rem;line-height:1.1;}
+.welcome h2{font-family:'Outfit',sans-serif;font-size:2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.6rem;line-height:1.1;}
 .welcome h2 .grad{background:linear-gradient(135deg,var(--blue) 30%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .welcome p{color:var(--text2);font-size:0.88rem;line-height:1.7;margin-bottom:0.4rem;}
-.dedication{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;color:var(--green);opacity:0.7;margin-bottom:2rem;}
+.dedication{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;color:var(--green);opacity:0.75;margin-bottom:2rem;font-style:italic;}
 .starters{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;}
-.starter-btn{font-size:0.78rem;padding:0.55rem 1rem;background:var(--surface);border:1px solid var(--border2);border-radius:20px;color:var(--text2);cursor:pointer;transition:all 0.2s;}
+.starter-btn{font-size:0.78rem;padding:0.55rem 1rem;background:var(--surface);border:1px solid var(--border2);border-radius:20px;color:var(--text2);cursor:pointer;transition:all 0.2s;font-family:'Outfit',sans-serif;}
 .starter-btn:hover{background:var(--blue-dim);border-color:rgba(59,130,246,0.4);color:var(--blue);transform:translateY(-1px);box-shadow:0 4px 16px rgba(59,130,246,0.12);}
 
+/* Story mode banner */
+.story-banner{background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(59,130,246,0.1));border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:1rem 1.2rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.8rem;animation:fadeSlide 0.4s ease;}
+.story-banner-icon{font-size:1.4rem;flex-shrink:0;}
+.story-banner-text{flex:1;}
+.story-banner-title{font-weight:600;font-size:0.88rem;color:var(--green);margin-bottom:0.2rem;}
+.story-banner-sub{font-size:0.78rem;color:var(--text2);}
+.story-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:1rem;padding:0.2rem;}
+
+/* Messages */
 .msg-row{display:flex;gap:0.75rem;animation:msgUp 0.3s ease;max-width:820px;}
 @keyframes msgUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .msg-row.user{flex-direction:row-reverse;margin-left:auto;}
-.msg-av{width:34px;height:34px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:800;margin-top:2px;}
-.msg-row.ai .msg-av{background:linear-gradient(135deg,var(--blue-dark),var(--green));color:#fff;box-shadow:0 0 16px rgba(59,130,246,0.25);}
+.msg-av{width:34px;height:34px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:800;margin-top:2px;}
+.msg-row.ai .msg-av{background:linear-gradient(135deg,var(--blue-dark),var(--green));color:#fff;box-shadow:0 0 16px rgba(59,130,246,0.2);}
 .msg-row.user .msg-av{background:var(--surface3);color:var(--text2);}
 .msg-body{max-width:700px;}
-.msg-from{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:0.35rem;}
+.msg-from{font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:0.35rem;}
 .msg-row.user .msg-from{text-align:right;}
-.bubble{padding:0.95rem 1.15rem;border-radius:12px;font-size:0.875rem;line-height:1.75;}
+.bubble{padding:0.95rem 1.15rem;border-radius:12px;font-size:0.875rem;line-height:1.8;font-family:'Outfit',sans-serif;font-weight:300;}
 .msg-row.ai .bubble{background:var(--surface);border:1px solid var(--border2);border-top-left-radius:3px;}
 .msg-row.user .bubble{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;border-top-right-radius:3px;box-shadow:0 4px 20px var(--blue-glow);}
 .bubble strong{color:var(--blue);font-weight:600;}
-.msg-row.user .bubble strong{color:rgba(255,255,255,0.9);}
+.msg-row.user .bubble strong{color:rgba(255,255,255,0.95);}
 .bubble em{color:var(--green);font-style:normal;font-weight:500;}
-.bubble .formula{background:var(--bg);border:1px solid var(--border2);border-left:3px solid var(--blue);padding:0.6rem 0.9rem;margin:0.7rem 0;font-family:'JetBrains Mono',monospace;font-size:0.78rem;border-radius:0 6px 6px 0;color:var(--blue);}
+.bubble .formula{background:var(--bg);border:1px solid var(--border2);border-left:3px solid var(--blue);padding:0.6rem 0.9rem;margin:0.7rem 0;font-family:'Space Mono',monospace;font-size:0.75rem;border-radius:0 6px 6px 0;color:var(--blue);}
 
+/* Typing */
 .typing-wrap{display:flex;gap:0.75rem;animation:msgUp 0.3s ease;}
 .typing-bubble{display:flex;align-items:center;gap:5px;padding:0.9rem 1.1rem;background:var(--surface);border:1px solid var(--border2);border-radius:12px;border-top-left-radius:3px;}
 .tdot{width:6px;height:6px;background:var(--blue);border-radius:50%;animation:tdot 1.2s infinite;opacity:0.4;}
 .tdot:nth-child(2){animation-delay:0.2s}.tdot:nth-child(3){animation-delay:0.4s}
 @keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:0.4}30%{transform:translateY(-6px);opacity:1}}
 
+/* Quiz */
 .quiz-wrap{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:1.1rem;margin-top:0.7rem;}
 .quiz-q{font-weight:500;margin-bottom:0.85rem;font-size:0.875rem;line-height:1.5;}
 .quiz-opts{display:flex;flex-direction:column;gap:0.4rem;}
@@ -98,25 +131,28 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .quiz-opt:hover{border-color:var(--blue);background:var(--blue-dim);color:var(--blue);}
 .quiz-opt.correct{border-color:var(--green);background:var(--green-dim);color:var(--green);}
 .quiz-opt.wrong{border-color:var(--red);background:rgba(248,113,113,0.08);color:var(--red);}
-.opt-letter{width:24px;height:24px;border-radius:6px;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:0.62rem;font-weight:500;flex-shrink:0;transition:all 0.2s;}
+.opt-letter{width:24px;height:24px;border-radius:6px;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:0.6rem;flex-shrink:0;transition:all 0.2s;color:var(--text2);}
 .quiz-opt.correct .opt-letter{background:var(--green);color:#000;}
 .quiz-opt.wrong .opt-letter{background:var(--red);color:#fff;}
 .quiz-exp{margin-top:0.75rem;padding:0.8rem 1rem;background:rgba(16,185,129,0.07);border-left:3px solid var(--green);border-radius:0 6px 6px 0;font-size:0.8rem;color:rgba(226,232,244,0.8);display:none;line-height:1.6;}
 
+/* INPUT */
 .input-area{padding:0.9rem 1.5rem 1.2rem;border-top:1px solid var(--border);background:rgba(8,12,20,0.8);backdrop-filter:blur(10px);}
 .mode-bar{display:flex;gap:0.3rem;margin-bottom:0.75rem;flex-wrap:wrap;}
-.mode-chip{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.07em;text-transform:uppercase;padding:0.28rem 0.7rem;border-radius:20px;background:var(--surface2);color:var(--text2);border:1px solid transparent;cursor:pointer;transition:all 0.2s;}
+.mode-chip{font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.04em;text-transform:uppercase;padding:0.28rem 0.7rem;border-radius:20px;background:var(--surface2);color:var(--text2);border:1px solid transparent;cursor:pointer;transition:all 0.2s;}
 .mode-chip:hover{color:var(--text);background:var(--surface3);}
 .mode-chip.active{background:var(--blue-dim);color:var(--blue);border-color:rgba(59,130,246,0.35);}
+.mode-chip.story-chip.active{background:var(--green-dim);color:var(--green);border-color:rgba(16,185,129,0.35);}
 .input-row{display:flex;gap:0.7rem;align-items:flex-end;}
-textarea{flex:1;background:var(--surface);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.875rem;font-weight:300;padding:0.8rem 1rem;resize:none;outline:none;min-height:46px;max-height:140px;line-height:1.55;transition:border-color 0.2s,box-shadow 0.2s;}
+textarea{flex:1;background:var(--surface);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:'Outfit',sans-serif;font-size:0.875rem;font-weight:300;padding:0.8rem 1rem;resize:none;outline:none;min-height:46px;max-height:140px;line-height:1.55;transition:border-color 0.2s,box-shadow 0.2s;}
 textarea::placeholder{color:var(--text3);}
 textarea:focus{border-color:rgba(59,130,246,0.5);box-shadow:0 0 0 3px rgba(59,130,246,0.08);}
 .send-btn{width:46px;height:46px;background:linear-gradient(135deg,var(--blue-dark),var(--blue));border:none;border-radius:10px;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all 0.2s;flex-shrink:0;box-shadow:0 4px 16px var(--blue-glow);}
 .send-btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px var(--blue-glow);}
 .send-btn:disabled{background:var(--surface3);box-shadow:none;cursor:not-allowed;transform:none;}
-.input-hint{font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--text3);text-align:center;margin-top:0.5rem;letter-spacing:0.05em;}
+.input-hint{font-family:'Space Mono',monospace;font-size:0.55rem;color:var(--text3);text-align:center;margin-top:0.5rem;letter-spacing:0.04em;}
 .input-hint span{color:var(--blue);}
+
 @media(max-width:700px){.sidebar,.subject-nav{display:none}.messages{padding:1rem}.input-area{padding:0.7rem 1rem 1rem}}
 </style>
 </head>
@@ -125,9 +161,8 @@ textarea:focus{border-color:rgba(59,130,246,0.5);box-shadow:0 0 0 3px rgba(59,13
   <div class="logo"><div class="logo-mark">Y</div>YURITTA</div>
   <div class="subject-nav">
     <button class="sub-btn active" onclick="setSubject(this,'economics')">Economics</button>
-    <button class="sub-btn" onclick="setSubject(this,'law')">Law</button>
-    <button class="sub-btn" onclick="setSubject(this,'medicine')">Medicine</button>
-    <button class="sub-btn" onclick="setSubject(this,'accounting')">Accounting</button>
+    <button class="sub-btn" onclick="setSubject(this,'clinical')">Clinical Sciences</button>
+    <button class="sub-btn" onclick="setSubject(this,'development')">Development Studies</button>
   </div>
   <div class="topbar-right">
     <div class="status-dot"></div>
@@ -143,13 +178,18 @@ textarea:focus{border-color:rgba(59,130,246,0.5);box-shadow:0 0 0 3px rgba(59,13
       <div class="upload-zone">
         <input type="file" accept=".pdf,.txt,.docx" multiple onchange="handleUpload(this)">
         <span class="upload-ico">📄</span>
-        <div class="upload-txt"><strong>Upload lecture notes</strong>PDF, Word, or text</div>
+        <div class="upload-txt">
+          <strong>Upload lecture notes</strong>
+          YURITTA will read and teach from your actual content
+          <small>PDF, Word, or text</small>
+        </div>
       </div>
       <div class="doc-list" id="docList"></div>
+      <button class="story-btn" id="storyModeBtn" onclick="startStoryMode()">📖 Teach me from my notes</button>
     </div>
     <div class="sidebar-block">
-      <div class="block-label">Topics</div>
-      <div class="topics" id="topicArea"></div>
+      <div class="block-label">Courses</div>
+      <div class="course-list" id="courseList"></div>
     </div>
     <div class="sidebar-block">
       <div class="block-label">Session</div>
@@ -167,8 +207,8 @@ textarea:focus{border-color:rgba(59,130,246,0.5);box-shadow:0 0 0 3px rgba(59,13
       <div class="welcome" id="welcome">
         <div class="welcome-glyph">🎓</div>
         <h2>Welcome to <span class="grad">YURITTA.</span></h2>
-        <p>Your AI tutor — available 24/7. Ask anything and get explanations using real African examples.</p>
-        <p class="dedication">— In memory of Yuritta —</p>
+        <p>Your AI tutor — available 24/7. Ask anything, upload your notes, and get explanations using real African examples.</p>
+        <p class="dedication">— Love conquers all —</p>
         <div class="starters" id="starters"></div>
       </div>
     </div>
@@ -178,6 +218,7 @@ textarea:focus{border-color:rgba(59,130,246,0.5);box-shadow:0 0 0 3px rgba(59,13
         <span class="mode-chip" onclick="setMode(this,'explain')">📖 Explain concept</span>
         <span class="mode-chip" onclick="setMode(this,'quiz')">⚡ Generate quiz</span>
         <span class="mode-chip" onclick="setMode(this,'solve')">🔢 Solve problem</span>
+        <span class="mode-chip story-chip" id="storyChip" onclick="setMode(this,'story')" style="display:none">📚 Story mode</span>
       </div>
       <div class="input-row">
         <textarea id="input" placeholder="Ask your question..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
@@ -192,110 +233,301 @@ textarea:focus{border-color:rgba(59,130,246,0.5);box-shadow:0 0 0 3px rgba(59,13
 const GEMINI_KEY='AIzaSyAO_1lijMuA1TtEaAVi3M24JMeYPUEWDA8';
 const GEMINI_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
 
-const SUBJECTS={
-  economics:{
-    topics:['Partial Derivatives','Elasticity','Total Differentials','Homogeneous Functions','Supply & Demand','GDP','Market Structures','Monetary Policy','Fiscal Policy','Game Theory'],
-    starters:['Explain partial derivatives simply','What is price elasticity? Use a Zambian example','Generate a quiz on differentiation','Explain homogeneous functions','How does the Kwacha relate to exchange rate theory?'],
-    prompt:`You are YURITTA, an expert economics tutor for African university students (UNZA, CBU, Mulungushi).\nSTYLE: Patient, encouraging, rigorous but accessible.\nEXPLAIN WITH: African/Zambian examples FIRST — Zambia copper/ZCCM, Kwacha, mealie meal, Lusaka markets, M-Pesa Kenya, Zimbabwe hyperinflation, SADC trade, Zambia-IMF.\nUse plain language before technical terms. For maths show every step. Wrap formulas in [FORMULA: ...]. Bold key terms **term**. Italicise African examples *example*.\nQUIZ: when asked, respond ONLY with JSON: {"type":"quiz","questions":[{"q":"Q","options":["A","B","C","D"],"answer":0,"explanation":"Why + African context"}]}\nEnd each response: "Does that make sense, or would you like a different approach?"`
+const PROGRAMMES = {
+  economics: {
+    label: 'Economics',
+    courses: {
+      'Year 1': ['Introduction to Economics','Mathematics for Economists','Statistics for Economics','Microeconomics I','Macroeconomics I','Economic History'],
+      'Year 2': ['Microeconomics II','Macroeconomics II','Econometrics I','Development Economics','Public Finance','International Trade'],
+      'Year 3': ['Econometrics II','Mathematical Economics','Labour Economics','Monetary Economics','Industrial Organisation','Research Methods'],
+    },
+    starters: ['Explain supply and demand with a Zambian market example','What is GDP and how is it measured?','Generate a quiz on microeconomics','Explain price elasticity using mealie meal','What is the Keynesian multiplier?'],
+    prompt: `You are YURITTA, an expert economics tutor for African university students (UNZA, CBU, Mulungushi University, Zambia).\n\nSTYLE: Patient, encouraging, academically rigorous but always accessible. Use conversational, clear language.\n\nEXPLAIN WITH African/Zambian examples FIRST:\n- Zambia copper industry, ZCCM, Kwacha exchange rate, mealie meal prices\n- Lusaka markets, Kenya M-Pesa, Zimbabwe hyperinflation, SADC trade\n- Zambia-IMF relations, FISP subsidy programme\n\nFORMATTING:\n- Use plain language before technical terms\n- Show every step for maths\n- Wrap formulas: [FORMULA: formula here]\n- Bold key terms: **term**\n- Italicise African examples: *example*\n\nQUIZ GENERATION — when asked to generate a quiz, you MUST respond with ONLY this exact JSON format and absolutely nothing else before or after it:\n{"type":"quiz","questions":[{"q":"Question text here","options":["First option","Second option","Third option","Fourth option"],"answer":0,"explanation":"Why this is correct, with African context"}]}\nGenerate exactly 5 questions. The answer field is the 0-based index of the correct option.\n\nEnd each explanation with: "Does that make sense, or would you like a different approach?"`
   },
-  law:{
-    topics:['Contract Law','Constitutional Law','Criminal Law','Tort Law','Land Law','Administrative Law','Human Rights','Evidence'],
-    starters:['Explain offer and acceptance','What is judicial review?','Explain negligence in tort','Fundamental rights under Zambian constitution?','Elements of a valid contract'],
-    prompt:`You are YURITTA, an expert law tutor for African university students.\nSTYLE: Patient, precise, uses real Zambian legal examples.\nEXPLAIN WITH: Zambian law, Constitution of Zambia, SADC frameworks, African court decisions. Real Zambian scenarios. Plain language before jargon. Bold key terms **term**.\nQUIZ: when asked, respond ONLY with JSON: {"type":"quiz","questions":[{"q":"Q","options":["A","B","C","D"],"answer":0,"explanation":"Why correct"}]}\nEnd: "Does that make sense, or would you like a different approach?"`
+  clinical: {
+    label: 'Clinical Sciences',
+    courses: {
+      'Year 1': ['Human Anatomy I','Human Physiology I','Biochemistry I','Medical Sociology','Introduction to Clinical Medicine','Health Systems in Zambia'],
+      'Year 2': ['Human Anatomy II','Human Physiology II','Biochemistry II','Pathology I','Microbiology & Immunology','Pharmacology I'],
+      'Year 3': ['Pathology II','Pharmacology II','Clinical Skills','Internal Medicine I','Surgery I','Obstetrics & Gynaecology I'],
+      'Year 4': ['Internal Medicine II','Surgery II','Paediatrics','Community Medicine','Psychiatry','ENT & Ophthalmology'],
+    },
+    starters: ['Explain the cardiac cycle simply','What is the mechanism of action of aspirin?','Explain malaria pathophysiology','What are the stages of wound healing?','Explain hypertension and its management in Zambia'],
+    prompt: `You are YURITTA, an expert clinical sciences tutor for medical students in Zambia and across Africa.\n\nSTYLE: Patient, clinically precise, uses African health contexts. Accuracy is critical — medical information must be correct.\n\nEXPLAIN WITH African/Zambian examples:\n- Diseases common in Zambia/Africa: malaria, TB, HIV/AIDS, cholera, sickle cell, typhoid\n- University Teaching Hospital (UTH) Lusaka contexts\n- Zambia's health system, community health posts, district hospitals\n- African epidemiology and disease burden\n\nFORMATTING:\n- Plain language before medical jargon\n- Use clinical mnemonics where helpful\n- Bold key terms: **term**\n\nQUIZ GENERATION — when asked to generate a quiz, you MUST respond with ONLY this exact JSON format and absolutely nothing else before or after it:\n{"type":"quiz","questions":[{"q":"Question text here","options":["First option","Second option","Third option","Fourth option"],"answer":0,"explanation":"Why correct"}]}\nGenerate exactly 5 questions. The answer field is the 0-based index of the correct option.\n\nEnd each explanation with: "Does that make sense, or would you like a different approach?"`
   },
-  medicine:{
-    topics:['Anatomy','Physiology','Pharmacology','Pathology','Microbiology','Infectious Diseases','Surgery Basics','Public Health'],
-    starters:['Explain the cardiac cycle simply','Mechanism of action of aspirin?','Explain malaria pathophysiology','Stages of wound healing?','Explain hypertension management'],
-    prompt:`You are YURITTA, an expert medical tutor for African university students.\nSTYLE: Patient, clinically precise, uses African health contexts.\nEXPLAIN WITH: Diseases common in Zambia/Africa (malaria, TB, HIV, cholera, sickle cell). Zambian hospital contexts. Plain language before medical jargon. Accuracy is critical. Bold key terms **term**.\nQUIZ: when asked, respond ONLY with JSON: {"type":"quiz","questions":[{"q":"Q","options":["A","B","C","D"],"answer":0,"explanation":"Why correct"}]}\nEnd: "Does that make sense, or would you like a different approach?"`
-  },
-  accounting:{
-    topics:['Financial Statements','Double Entry','Depreciation','Ratio Analysis','Budgeting','Taxation','Auditing','Cost Accounting'],
-    starters:['Explain double entry bookkeeping','What is depreciation?','How to read a balance sheet?','ZRA tax basics','Accrual vs cash accounting?'],
-    prompt:`You are YURITTA, an expert accounting tutor for African university students.\nSTYLE: Patient, methodical, uses Zambian business contexts.\nEXPLAIN WITH: Zambian businesses, ZRA tax law, Lusaka Stock Exchange. Step-by-step workings. Kwacha as default currency. Plain language before jargon. Bold key terms **term**.\nQUIZ: when asked, respond ONLY with JSON: {"type":"quiz","questions":[{"q":"Q","options":["A","B","C","D"],"answer":0,"explanation":"Why correct"}]}\nEnd: "Does that make sense, or would you like a different approach?"`
+  development: {
+    label: 'Development Studies',
+    courses: {
+      'Year 1': ['Introduction to Development Studies','Political Economy','Sociology of Development','Research Methods I','African History & Politics','Environmental Studies'],
+      'Year 2': ['Theories of Development','Rural Development','Urban Development','Gender & Development','Development Finance','Food Security & Agriculture'],
+      'Year 3': ['Governance & Democracy','Civil Society & NGOs','Development Project Management','Monitoring & Evaluation','Globalisation & Africa','Dissertation Preparation'],
+    },
+    starters: ['Explain dependency theory with an African example','What is the Human Development Index?','Explain Zambia\'s development challenges','What is good governance?','Generate a quiz on development theories'],
+    prompt: `You are YURITTA, an expert Development Studies tutor for African university students.\n\nSTYLE: Critical, analytical, grounded in African realities. Encourage students to think beyond Western frameworks.\n\nEXPLAIN WITH African/Zambian examples:\n- Zambia's development trajectory, copper dependence, debt crisis\n- SADC, African Union, NEPAD frameworks\n- Real African case studies: Rwanda governance, Botswana diamonds, Kenya digital economy\n- Zambian NGOs, civil society, traditional governance (induna system)\n\nFORMATTING:\n- Connect theory directly to African practice\n- Name real scholars: Walter Rodney, Amartya Sen, Ha-Joon Chang, Samir Amin\n- Bold key terms: **term**\n- Italicise African examples: *example*\n\nQUIZ GENERATION — when asked to generate a quiz, you MUST respond with ONLY this exact JSON format and absolutely nothing else before or after it:\n{"type":"quiz","questions":[{"q":"Question text here","options":["First option","Second option","Third option","Fourth option"],"answer":0,"explanation":"Why correct, with African context"}]}\nGenerate exactly 5 questions. The answer field is the 0-based index of the correct option.\n\nEnd each explanation with: "Does that make sense, or would you like a different approach?"`
   }
 };
 
-const S={messages:[],mode:'tutor',subject:'economics',docs:[],questions:0,topics:new Set(),qCorrect:0,qTotal:0};
+const S={messages:[],mode:'tutor',subject:'economics',docs:[],docContents:{},questions:0,topics:new Set(),qCorrect:0,qTotal:0};
 
-async function callGemini(userMsg){
-  const subj=SUBJECTS[S.subject];
-  const pfx={tutor:'',explain:'Explain thoroughly with African examples: ',quiz:'Generate a 5-question quiz about: ',solve:'Solve step by step showing all working: '};
-  const docCtx=S.docs.length>0?`\n[Student uploaded: ${S.docs.map(d=>d.name).join(', ')}]`:'';
-  const history=S.messages.map(m=>({role:m.role==='ai'?'model':'user',parts:[{text:m.content}]}));
-  history.push({role:'user',parts:[{text:pfx[S.mode]+userMsg+docCtx}]});
-  const res=await fetch(GEMINI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_instruction:{parts:[{text:subj.prompt}]},contents:history})});
-  const data=await res.json();
+// ── GEMINI API ─────────────────────────────────────
+async function callGemini(userMsg, systemOverride) {
+  const prog = PROGRAMMES[S.subject];
+  const systemPrompt = systemOverride || prog.prompt;
+
+  const modePrefix = {
+    tutor: '',
+    explain: 'Please explain this concept thoroughly with African examples: ',
+    quiz: 'Generate a 5-question multiple choice quiz about: ',
+    solve: 'Solve this step by step, showing all working: ',
+    story: ''
+  };
+
+  const docCtx = S.docs.length > 0
+    ? `\n\n[UPLOADED NOTES CONTEXT: The student has uploaded the following documents. Use this content to inform and personalise your teaching:\n${S.docs.map(d => `--- ${d.name} ---\n${S.docContents[d.name] || '(content not extracted)'}`).join('\n\n')}]`
+    : '';
+
+  const history = S.messages.slice(-12).map(m => ({
+    role: m.role === 'ai' ? 'model' : 'user',
+    parts: [{ text: m.content }]
+  }));
+
+  const fullMsg = modePrefix[S.mode] + userMsg + docCtx;
+  history.push({ role: 'user', parts: [{ text: fullMsg }] });
+
+  const res = await fetch(GEMINI_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      system_instruction: { parts: [{ text: systemPrompt }] },
+      contents: history,
+      generationConfig: { temperature: 0.7, maxOutputTokens: 1500 }
+    })
+  });
+
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  const data = await res.json();
+  if (!data.candidates || !data.candidates[0]) throw new Error('No response from AI');
   return data.candidates[0].content.parts[0].text;
 }
 
-async function send(customMsg){
-  const inp=document.getElementById('input');
-  const msg=customMsg||inp.value.trim();
-  if(!msg)return;
-  const w=document.getElementById('welcome');if(w)w.remove();
-  inp.value='';autoResize(inp);
-  document.getElementById('sendBtn').disabled=true;
-  addMsg('user',msg);S.messages.push({role:'user',content:msg});
-  S.questions++;document.getElementById('statQ').textContent=S.questions;
-  const tid=showTyping();
-  try{
-    const reply=await callGemini(msg);removeTyping(tid);
-    try{const t=reply.trim();const s=t.indexOf('{');const e=t.lastIndexOf('}');
-      if(s!==-1){const p=JSON.parse(t.slice(s,e+1));if(p.type==='quiz'){renderQuiz(p.questions);S.messages.push({role:'ai',content:reply});document.getElementById('sendBtn').disabled=false;return;}}}catch(_){}
-    addMsg('ai',reply);S.messages.push({role:'ai',content:reply});
-  }catch(err){removeTyping(tid);addMsg('ai','⚠️ Connection issue. Please try again.');}
-  document.getElementById('sendBtn').disabled=false;
+// ── STORY MODE ────────────────────────────────────
+async function startStoryMode() {
+  if (S.docs.length === 0) {
+    alert('Please upload your lecture notes first — then YURITTA will teach from them.');
+    return;
+  }
+  const w = document.getElementById('welcome'); if (w) w.remove();
+  setMode(document.getElementById('storyChip'), 'story');
+
+  // Show story banner
+  const msgs = document.getElementById('messages');
+  const banner = document.createElement('div');
+  banner.className = 'story-banner';
+  banner.id = 'storyBanner';
+  banner.innerHTML = `<div class="story-banner-icon">📚</div><div class="story-banner-text"><div class="story-banner-title">Story Mode — Teaching from your notes</div><div class="story-banner-sub">YURITTA is reading: ${S.docs.map(d=>d.name).join(', ')}</div></div><button class="story-close" onclick="this.parentElement.remove()">✕</button>`;
+  msgs.appendChild(banner);
+
+  const docNames = S.docs.map(d => d.name).join(', ');
+  const storyPrompt = `The student has uploaded their lecture notes: ${docNames}.
+
+Your job: Act as a brilliant, engaging lecturer who has read these notes thoroughly. 
+
+1. Start by briefly summarising what topics are covered in the uploaded material
+2. Identify the 3-5 most important concepts the student needs to understand
+3. Begin teaching the FIRST concept using a vivid story or real-world African/Zambian analogy — make it memorable
+4. After explaining, ask the student one thought-provoking question to check their understanding
+
+Be warm, engaging, and make the content come alive. This is Story Mode — teach like a great professor, not like a textbook.`;
+
+  document.getElementById('sendBtn').disabled = true;
+  const tid = showTyping();
+  try {
+    const reply = await callGemini(storyPrompt, PROGRAMMES[S.subject].prompt);
+    removeTyping(tid);
+    addMsg('ai', reply);
+    S.messages.push({ role: 'ai', content: reply });
+  } catch(e) {
+    removeTyping(tid);
+    addMsg('ai', '⚠️ Could not start Story Mode. Please try again.');
+  }
+  document.getElementById('sendBtn').disabled = false;
 }
 
-function addMsg(role,text){
-  const c=document.getElementById('messages');
-  const row=document.createElement('div');row.className=`msg-row ${role}`;
-  const av=document.createElement('div');av.className='msg-av';av.textContent=role==='ai'?'Y':'👤';
-  const body=document.createElement('div');body.className='msg-body';
-  const from=document.createElement('div');from.className='msg-from';from.textContent=role==='ai'?'YURITTA Tutor':'You';
-  if(role==='user')from.style.textAlign='right';
-  const bubble=document.createElement('div');bubble.className='bubble';
-  bubble.innerHTML=text.replace(/\[FORMULA:\s*(.*?)\]/g,'<div class="formula">$1</div>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>').replace(/\n/g,'<br>');
-  body.appendChild(from);body.appendChild(bubble);row.appendChild(av);row.appendChild(body);c.appendChild(row);c.scrollTop=c.scrollHeight;
+// ── SEND ──────────────────────────────────────────
+async function send(customMsg) {
+  const inp = document.getElementById('input');
+  const msg = customMsg || inp.value.trim();
+  if (!msg) return;
+  const w = document.getElementById('welcome'); if (w) w.remove();
+  inp.value = ''; autoResize(inp);
+  document.getElementById('sendBtn').disabled = true;
+  addMsg('user', msg);
+  S.messages.push({ role: 'user', content: msg });
+  S.questions++; document.getElementById('statQ').textContent = S.questions;
+  const tid = showTyping();
+  try {
+    const reply = await callGemini(msg);
+    removeTyping(tid);
+    // Quiz detection — look for JSON with type:quiz
+    try {
+      const t = reply.trim();
+      // Find first { and last } to extract JSON
+      const start = t.indexOf('{"type":"quiz"');
+      const start2 = t.indexOf('{ "type": "quiz"');
+      const jsonStart = start !== -1 ? start : start2;
+      if (jsonStart !== -1) {
+        const jsonEnd = t.lastIndexOf('}') + 1;
+        const jsonStr = t.slice(jsonStart, jsonEnd);
+        const p = JSON.parse(jsonStr);
+        if (p.type === 'quiz' && p.questions) {
+          renderQuiz(p.questions);
+          S.messages.push({ role: 'ai', content: reply });
+          document.getElementById('sendBtn').disabled = false;
+          return;
+        }
+      }
+    } catch(_) {}
+    addMsg('ai', reply);
+    S.messages.push({ role: 'ai', content: reply });
+  } catch(err) {
+    removeTyping(tid);
+    addMsg('ai', '⚠️ Connection issue. Please check your internet and try again.');
+  }
+  document.getElementById('sendBtn').disabled = false;
 }
 
-function showTyping(){
-  const c=document.getElementById('messages');const id='ty-'+Date.now();
-  const d=document.createElement('div');d.id=id;d.className='typing-wrap';
-  d.innerHTML=`<div class="msg-av" style="background:linear-gradient(135deg,#1d4ed8,#10b981);color:#fff;font-family:'Syne',sans-serif;font-weight:800;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;">Y</div><div class="typing-bubble"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>`;
-  c.appendChild(d);c.scrollTop=c.scrollHeight;return id;
+// ── RENDER ────────────────────────────────────────
+function addMsg(role, text) {
+  const c = document.getElementById('messages');
+  const row = document.createElement('div'); row.className = `msg-row ${role}`;
+  const av = document.createElement('div'); av.className = 'msg-av'; av.textContent = role === 'ai' ? 'Y' : '👤';
+  const body = document.createElement('div'); body.className = 'msg-body';
+  const from = document.createElement('div'); from.className = 'msg-from';
+  from.textContent = role === 'ai' ? 'YURITTA Tutor' : 'You';
+  if (role === 'user') from.style.textAlign = 'right';
+  const bubble = document.createElement('div'); bubble.className = 'bubble';
+  bubble.innerHTML = text
+    .replace(/\[FORMULA:\s*(.*?)\]/g, '<div class="formula">$1</div>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+  body.appendChild(from); body.appendChild(bubble);
+  row.appendChild(av); row.appendChild(body);
+  c.appendChild(row); c.scrollTop = c.scrollHeight;
 }
-function removeTyping(id){const el=document.getElementById(id);if(el)el.remove();}
 
-function renderQuiz(qs){
-  const c=document.getElementById('messages');const row=document.createElement('div');row.className='msg-row ai';
-  let h=`<div class="msg-av" style="background:linear-gradient(135deg,#1d4ed8,#10b981);color:#fff;font-family:'Syne',sans-serif;font-weight:800;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;">Y</div><div class="msg-body"><div class="msg-from">YURITTA Tutor</div><div class="bubble"><strong style="color:var(--blue);font-size:0.9rem;">⚡ Quiz — ${qs.length} Questions</strong><p style="color:var(--text2);font-size:0.78rem;margin:0.4rem 0 0.8rem">Tap an option to answer.</p>`;
-  qs.forEach((q,qi)=>{
-    h+=`<div class="quiz-wrap" id="qw-${qi}"><div class="quiz-q">${qi+1}. ${q.q}</div><div class="quiz-opts">`;
-    q.options.forEach((opt,oi)=>{h+=`<div class="quiz-opt" onclick="answerQ(${qi},${oi},${q.answer},'qw-${qi}')"><span class="opt-letter">${String.fromCharCode(65+oi)}</span>${opt}</div>`;});
-    h+=`</div><div class="quiz-exp" id="qe-${qi}">💡 ${q.explanation}</div></div>`;
+function showTyping() {
+  const c = document.getElementById('messages'); const id = 'ty-' + Date.now();
+  const d = document.createElement('div'); d.id = id; d.className = 'typing-wrap';
+  d.innerHTML = `<div class="msg-av" style="background:linear-gradient(135deg,#1d4ed8,#10b981);color:#fff;font-family:'Outfit',sans-serif;font-weight:800;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;">Y</div><div class="typing-bubble"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>`;
+  c.appendChild(d); c.scrollTop = c.scrollHeight; return id;
+}
+function removeTyping(id) { const el = document.getElementById(id); if (el) el.remove(); }
+
+function renderQuiz(qs) {
+  const c = document.getElementById('messages');
+  const row = document.createElement('div'); row.className = 'msg-row ai';
+  let h = `<div class="msg-av" style="background:linear-gradient(135deg,#1d4ed8,#10b981);color:#fff;font-family:'Outfit',sans-serif;font-weight:800;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;">Y</div>
+  <div class="msg-body"><div class="msg-from">YURITTA Tutor</div><div class="bubble">
+  <strong style="color:var(--blue);font-size:0.9rem;">⚡ Quiz — ${qs.length} Questions</strong>
+  <p style="color:var(--text2);font-size:0.78rem;margin:0.4rem 0 0.8rem;font-family:'Space Mono',monospace;">Tap an option to answer.</p>`;
+  qs.forEach((q, qi) => {
+    h += `<div class="quiz-wrap" id="qw-${qi}"><div class="quiz-q">${qi+1}. ${q.q}</div><div class="quiz-opts">`;
+    q.options.forEach((opt, oi) => {
+      h += `<div class="quiz-opt" onclick="answerQ(${qi},${oi},${q.answer},'qw-${qi}')"><span class="opt-letter">${String.fromCharCode(65+oi)}</span>${opt}</div>`;
+    });
+    h += `</div><div class="quiz-exp" id="qe-${qi}">💡 ${q.explanation}</div></div>`;
   });
-  h+=`</div></div>`;row.innerHTML=h;c.appendChild(row);c.scrollTop=c.scrollHeight;
+  h += `</div></div>`;
+  row.innerHTML = h; c.appendChild(row); c.scrollTop = c.scrollHeight;
 }
 
-function answerQ(qi,chosen,correct,wrapId){
-  const opts=document.getElementById(wrapId).querySelectorAll('.quiz-opt');
-  opts.forEach(o=>o.style.pointerEvents='none');
-  opts[chosen].classList.add(chosen===correct?'correct':'wrong');opts[correct].classList.add('correct');
-  document.getElementById(`qe-${qi}`).style.display='block';
-  if(chosen===correct)S.qCorrect++;S.qTotal++;
-  document.getElementById('statQz').textContent=Math.round((S.qCorrect/S.qTotal)*100)+'%';
+function answerQ(qi, chosen, correct, wrapId) {
+  const opts = document.getElementById(wrapId).querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.style.pointerEvents = 'none');
+  opts[chosen].classList.add(chosen === correct ? 'correct' : 'wrong');
+  opts[correct].classList.add('correct');
+  document.getElementById(`qe-${qi}`).style.display = 'block';
+  if (chosen === correct) S.qCorrect++;
+  S.qTotal++;
+  document.getElementById('statQz').textContent = Math.round((S.qCorrect / S.qTotal) * 100) + '%';
 }
 
-function setSubject(el,sub){S.subject=sub;S.messages=[];document.querySelectorAll('.sub-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderTopics();renderStarters();document.getElementById('input').placeholder=`Ask your ${sub} question...`;}
-function setMode(el,mode){S.mode=mode;document.querySelectorAll('.mode-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');}
-function setTopic(el,topic){document.querySelectorAll('.topic-tag').forEach(t=>t.classList.remove('active'));el.classList.add('active');S.topics.add(topic);document.getElementById('statT').textContent=S.topics.size;document.getElementById('input').value=`Explain ${topic} with Zambian examples`;document.getElementById('input').focus();}
-function renderTopics(){document.getElementById('topicArea').innerHTML=SUBJECTS[S.subject].topics.map(t=>`<span class="topic-tag" onclick="setTopic(this,'${t}')">${t}</span>`).join('');}
-function renderStarters(){document.getElementById('starters').innerHTML=SUBJECTS[S.subject].starters.map(s=>`<span class="starter-btn" onclick="send('${s.replace(/'/g,"\\'")}')">${s}</span>`).join('');}
-function handleUpload(inp){Array.from(inp.files).forEach(f=>{S.docs.push({name:f.name});const list=document.getElementById('docList');const row=document.createElement('div');row.className='doc-row';row.innerHTML=`<span>📄</span><span class="doc-name" title="${f.name}">${f.name.length>24?f.name.slice(0,22)+'…':f.name}</span><span class="doc-badge">ready</span>`;list.appendChild(row);document.getElementById('statD').textContent=S.docs.length;});}
-function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
-function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,140)+'px';}
-renderTopics();renderStarters();
+// ── UPLOAD WITH TEXT EXTRACTION ───────────────────
+function handleUpload(inp) {
+  Array.from(inp.files).forEach(f => {
+    S.docs.push({ name: f.name });
+    // Extract text content
+    const reader = new FileReader();
+    reader.onload = e => {
+      const text = e.target.result;
+      if (typeof text === 'string') {
+        S.docContents[f.name] = text.slice(0, 8000); // cap at 8k chars
+      }
+    };
+    if (f.type === 'text/plain') reader.readAsText(f);
+    // For PDF/docx we note the name only (binary files need server-side extraction)
+    const list = document.getElementById('docList');
+    const row = document.createElement('div'); row.className = 'doc-row';
+    row.innerHTML = `<span>📄</span><span class="doc-name" title="${f.name}">${f.name.length > 22 ? f.name.slice(0,20)+'…' : f.name}</span><span class="doc-badge">ready</span>`;
+    list.appendChild(row);
+    document.getElementById('statD').textContent = S.docs.length;
+    // Show story mode button
+    document.getElementById('storyModeBtn').classList.add('visible');
+    document.getElementById('storyChip').style.display = 'inline-block';
+  });
+}
+
+// ── SUBJECT / MODE / COURSE ───────────────────────
+function setSubject(el, sub) {
+  S.subject = sub; S.messages = [];
+  document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderCourses(); renderStarters();
+  document.getElementById('input').placeholder = `Ask your ${PROGRAMMES[sub].label} question...`;
+}
+
+function setMode(el, mode) {
+  S.mode = mode;
+  document.querySelectorAll('.mode-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function setCourse(el, course) {
+  document.querySelectorAll('.course-item').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  S.topics.add(course);
+  document.getElementById('statT').textContent = S.topics.size;
+  document.getElementById('input').value = `Teach me about ${course} with Zambian/African examples`;
+  document.getElementById('input').focus();
+}
+
+function renderCourses() {
+  const list = document.getElementById('courseList');
+  const prog = PROGRAMMES[S.subject];
+  let html = '';
+  for (const [year, courses] of Object.entries(prog.courses)) {
+    html += `<div class="year-label">${year}</div>`;
+    courses.forEach(c => {
+      html += `<div class="course-item" onclick="setCourse(this,'${c.replace(/'/g,"\\'")}') ">${c}</div>`;
+    });
+  }
+  list.innerHTML = html;
+}
+
+function renderStarters() {
+  document.getElementById('starters').innerHTML =
+    PROGRAMMES[S.subject].starters.map(s =>
+      `<span class="starter-btn" onclick="send('${s.replace(/'/g,"\\'")}')">${s}</span>`).join('');
+}
+
+function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } }
+function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 140) + 'px'; }
+
+// Init
+renderCourses();
+renderStarters();
 </script>
 </body>
 </html>
