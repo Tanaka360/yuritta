@@ -3,117 +3,157 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YURITTA — My Progress</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>YURITTA — Progress</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0e0e0f;--surface:#161618;--surface2:#1e1e21;--border:rgba(255,255,255,0.07);--gold:#d4a843;--gold-dim:rgba(212,168,67,0.12);--text:#e8e6e0;--muted:#6b6a66;--green:#4ade80;--red:#f87171;}
+:root{
+  --bg:#080c14;--bg2:#0d1220;--surface:#111827;--surface2:#1a2235;--surface3:#1f2d45;
+  --border:rgba(99,140,210,0.1);--border2:rgba(99,140,210,0.18);
+  --blue:#3b82f6;--blue-dim:rgba(59,130,246,0.1);--blue-glow:rgba(59,130,246,0.25);--blue-dark:#1d4ed8;
+  --green:#10b981;--green-dim:rgba(16,185,129,0.1);--green-glow:rgba(16,185,129,0.2);
+  --text:#e2e8f4;--text2:#94a3b8;--text3:#3d4f6b;--red:#f87171;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-serif;min-height:100vh;}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:56px;border-bottom:1px solid var(--border);background:var(--surface);}
-.logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--text);text-decoration:none;letter-spacing:0.04em;}
-.nav-btn{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;padding:0.4rem 0.8rem;border-radius:4px;transition:all 0.2s;text-decoration:none;display:inline-block;}
-.nav-btn:hover{color:var(--text);background:var(--surface2);}
-.mode-tag{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);padding:0.25rem 0.7rem;border-radius:2px;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-weight:300;min-height:100vh;background-image:radial-gradient(ellipse 80% 50% at 20% -10%,rgba(59,130,246,0.07) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 110%,rgba(16,185,129,0.05) 0%,transparent 60%);}
+
+.topbar{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;border-bottom:1px solid var(--border);background:rgba(8,12,20,0.92);backdrop-filter:blur(20px);}
+.logo{display:flex;align-items:center;gap:0.6rem;font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;letter-spacing:0.08em;color:var(--text);text-decoration:none;}
+.logo-mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,var(--blue),var(--green));display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#fff;box-shadow:0 0 16px var(--blue-glow);}
+.topbar-right{display:flex;align-items:center;gap:0.5rem;}
+.nav-link{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--text2);text-decoration:none;padding:0.4rem 0.8rem;border-radius:6px;transition:all 0.2s;border:1px solid transparent;}
+.nav-link:hover{color:var(--blue);border-color:var(--border2);background:var(--blue-dim);}
+.page-badge{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);background:var(--green-dim);border:1px solid rgba(16,185,129,0.2);padding:0.25rem 0.7rem;border-radius:4px;}
+
 .main{max-width:900px;margin:0 auto;padding:3rem 1.5rem;}
-h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;margin-bottom:0.4rem;}
-h1 em{font-style:italic;color:var(--gold);}
-.subtitle{color:var(--muted);margin-bottom:2.5rem;font-size:0.9rem;}
+
+.page-header{margin-bottom:2.5rem;}
+.page-header h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.4rem;}
+.page-header h1 .grad{background:linear-gradient(135deg,var(--blue) 30%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.page-header p{color:var(--text2);font-size:0.88rem;}
+
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem;}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.2rem;text-align:center;}
-.stat-val{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--gold);display:block;margin-bottom:0.3rem;}
-.stat-lbl{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
-.section-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:0.8rem;}
-.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
-.subject-tabs{display:flex;gap:0.4rem;margin-bottom:1.5rem;flex-wrap:wrap;}
-.stab{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.35rem 0.8rem;border-radius:3px;cursor:pointer;border:1px solid var(--border);color:var(--muted);background:none;transition:all 0.2s;}
-.stab:hover,.stab.active{background:var(--gold-dim);color:var(--gold);border-color:rgba(212,168,67,0.3);}
-.bar-chart{display:flex;align-items:flex-end;gap:0.5rem;height:120px;margin-bottom:2.5rem;}
-.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.3rem;}
-.bar{width:100%;background:var(--gold);border-radius:3px 3px 0 0;min-height:4px;}
-.bar-label{font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--muted);text-align:center;}
-.history-table{width:100%;border-collapse:collapse;margin-bottom:2rem;}
-.history-table th{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:0.6rem 1rem;text-align:left;border-bottom:1px solid var(--border);}
-.history-table td{padding:0.8rem 1rem;border-bottom:1px solid var(--border);font-size:0.85rem;}
-.history-table tr:last-child td{border-bottom:none;}
-.score-pill{display:inline-block;padding:0.2rem 0.6rem;border-radius:20px;font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:500;}
-.score-high{background:rgba(74,222,128,0.12);color:var(--green);}
-.score-mid{background:var(--gold-dim);color:var(--gold);}
-.score-low{background:rgba(248,113,113,0.1);color:var(--red);}
-.subject-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.06em;text-transform:uppercase;padding:0.15rem 0.5rem;border-radius:2px;background:var(--surface2);color:var(--muted);}
-.empty-state{text-align:center;padding:3rem;color:var(--muted);}
-.empty-state .big{font-size:2.5rem;margin-bottom:1rem;}
-.empty-state p{font-size:0.9rem;margin-bottom:1.5rem;line-height:1.6;}
-.cta-btn{display:inline-block;background:var(--gold);color:#000;padding:0.7rem 1.5rem;border-radius:6px;font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;font-weight:500;text-decoration:none;transition:all 0.2s;}
-.cta-btn:hover{background:#e8c060;}
-.clear-btn{background:none;border:1px solid var(--border);color:var(--muted);padding:0.4rem 0.8rem;border-radius:4px;font-family:'DM Mono',monospace;font-size:0.65rem;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;float:right;margin-top:-2rem;margin-bottom:1rem;}
+.stat-card{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:1.2rem;text-align:center;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--green));}
+.stat-val{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;margin-bottom:0.3rem;line-height:1;}
+.stat-lbl{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);}
+
+.section-head{display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;}
+.section-title{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3);}
+.section-line{flex:1;height:1px;background:var(--border);}
+
+.filter-row{display:flex;gap:0.4rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.filter-btn{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.06em;text-transform:uppercase;padding:0.3rem 0.8rem;border-radius:5px;cursor:pointer;border:1px solid var(--border);color:var(--text2);background:none;transition:all 0.2s;}
+.filter-btn:hover,.filter-btn.active{background:var(--blue-dim);color:var(--blue);border-color:rgba(59,130,246,0.35);}
+
+.chart-wrap{height:120px;display:flex;align-items:flex-end;gap:0.5rem;margin-bottom:2.5rem;padding:0 0.2rem;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.3rem;}
+.bar-fill{width:100%;border-radius:4px 4px 0 0;min-height:3px;transition:height 0.6s ease;}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:0.55rem;color:var(--text3);}
+
+.table-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:2rem;}
+table{width:100%;border-collapse:collapse;}
+thead th{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);padding:0.75rem 1rem;text-align:left;border-bottom:1px solid var(--border);background:var(--bg2);}
+tbody td{padding:0.85rem 1rem;border-bottom:1px solid var(--border);font-size:0.84rem;color:var(--text2);}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:rgba(59,130,246,0.03);}
+
+.sub-badge{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.06em;text-transform:uppercase;padding:0.18rem 0.5rem;border-radius:4px;background:var(--surface2);color:var(--text3);border:1px solid var(--border);}
+.score-badge{font-family:'JetBrains Mono',monospace;font-size:0.68rem;font-weight:500;padding:0.2rem 0.6rem;border-radius:4px;}
+.s-high{background:var(--green-dim);color:var(--green);border:1px solid rgba(16,185,129,0.2);}
+.s-mid{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(59,130,246,0.2);}
+.s-low{background:rgba(248,113,113,0.08);color:var(--red);border:1px solid rgba(248,113,113,0.15);}
+
+.clear-btn{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.06em;text-transform:uppercase;background:none;border:1px solid var(--border);color:var(--text3);padding:0.3rem 0.7rem;border-radius:5px;cursor:pointer;transition:all 0.2s;float:right;margin-top:-1.8rem;margin-bottom:0.8rem;}
 .clear-btn:hover{border-color:var(--red);color:var(--red);}
+
+.empty{text-align:center;padding:4rem 2rem;}
+.empty-icon{font-size:3rem;margin-bottom:1rem;display:block;opacity:0.4;}
+.empty h3{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:0.5rem;}
+.empty p{color:var(--text2);font-size:0.875rem;margin-bottom:1.5rem;}
+.cta{display:inline-block;background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;padding:0.75rem 1.5rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;box-shadow:0 4px 16px var(--blue-glow);}
+.cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--blue-glow);}
+
 @media(max-width:600px){.stats-row{grid-template-columns:1fr 1fr;}.main{padding:2rem 1rem;}}
 </style>
 </head>
 <body>
 <div class="topbar">
-  <a href="index.html" class="logo">YURITTA</a>
-  <div style="display:flex;align-items:center;gap:1rem">
-    <span class="mode-tag">Progress</span>
-    <a href="index.html" class="nav-btn">Tutor</a>
-    <a href="quiz.html" class="nav-btn">Quiz</a>
+  <a href="index.html" class="logo"><div class="logo-mark">Y</div>YURITTA</a>
+  <div class="topbar-right">
+    <span class="page-badge">Progress</span>
+    <a href="index.html" class="nav-link">Tutor</a>
+    <a href="quiz.html" class="nav-link">Quiz</a>
   </div>
 </div>
 
 <div class="main">
-  <h1>Your <em>Progress.</em></h1>
-  <p class="subtitle">Every quiz you complete across all your subjects is tracked here.</p>
-  <div class="stats-row">
-    <div class="stat-card"><span class="stat-val" id="totalQuizzes">0</span><span class="stat-lbl">Quizzes Done</span></div>
-    <div class="stat-card"><span class="stat-val" id="avgScore">—</span><span class="stat-lbl">Avg Score</span></div>
-    <div class="stat-card"><span class="stat-val" id="bestScore">—</span><span class="stat-lbl">Best Score</span></div>
-    <div class="stat-card"><span class="stat-val" id="subjectsCount">0</span><span class="stat-lbl">Subjects Studied</span></div>
+  <div class="page-header">
+    <h1>Your <span class="grad">Progress.</span></h1>
+    <p>Every quiz you complete across all subjects is tracked here.</p>
   </div>
-  <div id="contentArea"></div>
+
+  <div class="stats-row">
+    <div class="stat-card"><span class="stat-val" id="totalQ">0</span><span class="stat-lbl">Quizzes Done</span></div>
+    <div class="stat-card"><span class="stat-val" id="avgS">—</span><span class="stat-lbl">Avg Score</span></div>
+    <div class="stat-card"><span class="stat-val" id="bestS">—</span><span class="stat-lbl">Best Score</span></div>
+    <div class="stat-card"><span class="stat-val" id="subCount">0</span><span class="stat-lbl">Subjects</span></div>
+  </div>
+
+  <div id="content"></div>
 </div>
 
 <script>
-let activeFilter = 'all';
+let activeFilter='all';
 
-function loadProgress() {
-  const history = JSON.parse(localStorage.getItem('yuritta_history') || '[]');
-  const area = document.getElementById('contentArea');
-  if (history.length === 0) {
-    area.innerHTML = `<div class="empty-state"><div class="big">📊</div><p>No quiz history yet. Complete your first quiz to start tracking your progress.</p><a href="quiz.html" class="cta-btn">Start a Quiz →</a></div>`;
+function render(){
+  const hist=JSON.parse(localStorage.getItem('yuritta_history')||'[]');
+  const el=document.getElementById('content');
+
+  if(!hist.length){
+    el.innerHTML=`<div class="empty"><span class="empty-icon">📊</span><h3>No data yet</h3><p>Complete your first quiz to start tracking your progress.</p><a href="quiz.html" class="cta">Start a Quiz →</a></div>`;
     return;
   }
-  const scores = history.map(h=>h.score);
-  const subjects = [...new Set(history.map(h=>h.subject))];
-  document.getElementById('totalQuizzes').textContent = history.length;
-  document.getElementById('avgScore').textContent = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length)+'%';
-  document.getElementById('bestScore').textContent = Math.max(...scores)+'%';
-  document.getElementById('subjectsCount').textContent = subjects.length;
 
-  const tabs = ['all',...subjects].map(s=>`<button class="stab${s===activeFilter?' active':''}" onclick="filterSubject('${s}')">${s==='all'?'All Subjects':s.charAt(0).toUpperCase()+s.slice(1)}</button>`).join('');
-  const filtered = activeFilter==='all' ? history : history.filter(h=>h.subject===activeFilter);
-  const recent = filtered.slice(-8);
-  const bars = recent.map(h=>`<div class="bar-wrap"><div class="bar" style="height:${h.score}px;opacity:${h.score>=80?1:h.score>=50?0.7:0.45}"></div><div class="bar-label">${h.score}%</div></div>`).join('');
-  const rows = filtered.slice().reverse().map(h=>{
-    const cls=h.score>=80?'score-high':h.score>=50?'score-mid':'score-low';
-    return `<tr><td>${h.date}</td><td><span class="subject-badge">${h.subject||'economics'}</span></td><td>${h.topic}</td><td>${h.correct}/${h.total}</td><td><span class="score-pill ${cls}">${h.score}%</span></td></tr>`;
+  const scores=hist.map(h=>h.score);
+  const subs=[...new Set(hist.map(h=>h.subject))];
+  document.getElementById('totalQ').textContent=hist.length;
+  document.getElementById('avgS').textContent=Math.round(scores.reduce((a,b)=>a+b,0)/scores.length)+'%';
+  document.getElementById('bestS').textContent=Math.max(...scores)+'%';
+  document.getElementById('subCount').textContent=subs.length;
+
+  const filtered=activeFilter==='all'?hist:hist.filter(h=>h.subject===activeFilter);
+  const tabs=['all',...subs].map(s=>`<button class="filter-btn${s===activeFilter?' active':''}" onclick="setFilter('${s}')">${s==='all'?'All':s.charAt(0).toUpperCase()+s.slice(1)}</button>`).join('');
+
+  const recent=filtered.slice(-10);
+  const maxScore=100;
+  const bars=recent.map(h=>{
+    const opacity=h.score>=80?1:h.score>=50?0.7:0.45;
+    const bg=h.score>=80?`linear-gradient(180deg,var(--green),rgba(16,185,129,0.5))`:`linear-gradient(180deg,var(--blue),rgba(59,130,246,0.5))`;
+    return `<div class="bar-col"><div class="bar-fill" style="height:${h.score}px;background:${bg};opacity:${opacity}"></div><div class="bar-val">${h.score}%</div></div>`;
   }).join('');
 
-  area.innerHTML = `
-    <div class="subject-tabs">${tabs}</div>
-    <div class="section-label">Score Trend</div>
-    <div class="bar-chart">${bars}</div>
-    <div class="section-label">Quiz History</div>
-    <button class="clear-btn" onclick="clearHistory()">Clear All</button>
-    <table class="history-table">
-      <thead><tr><th>Date</th><th>Subject</th><th>Topic</th><th>Result</th><th>Score</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>`;
+  const rows=filtered.slice().reverse().map(h=>{
+    const cls=h.score>=80?'s-high':h.score>=50?'s-mid':'s-low';
+    return `<tr><td>${h.date}</td><td><span class="sub-badge">${h.subject||'economics'}</span></td><td>${h.topic}</td><td>${h.correct}/${h.total}</td><td><span class="score-badge ${cls}">${h.score}%</span></td></tr>`;
+  }).join('');
+
+  el.innerHTML=`
+    <div class="filter-row">${tabs}</div>
+    <div class="section-head"><span class="section-title">Score Trend</span><div class="section-line"></div></div>
+    <div class="chart-wrap">${bars}</div>
+    <div class="section-head"><span class="section-title">Quiz History</span><div class="section-line"></div></div>
+    <button class="clear-btn" onclick="clearAll()">Clear All</button>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Subject</th><th>Topic</th><th>Result</th><th>Score</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
 }
 
-function filterSubject(subject) { activeFilter = subject; loadProgress(); }
-function clearHistory() { if(confirm('Clear all quiz history?')){localStorage.removeItem('yuritta_history');location.reload();} }
-
-loadProgress();
+function setFilter(f){activeFilter=f;render();}
+function clearAll(){if(confirm('Clear all quiz history?')){localStorage.removeItem('yuritta_history');location.reload();}}
+render();
 </script>
 </body>
 </html>
