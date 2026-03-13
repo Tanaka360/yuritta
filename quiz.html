@@ -4,246 +4,307 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YURITTA — Quiz Mode</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0e0e0f;--surface:#161618;--surface2:#1e1e21;--border:rgba(255,255,255,0.07);--gold:#d4a843;--gold-dim:rgba(212,168,67,0.12);--text:#e8e6e0;--muted:#6b6a66;--green:#4ade80;--red:#f87171;}
+:root{
+  --bg:#080c14;--bg2:#0d1220;--surface:#111827;--surface2:#1a2235;--surface3:#1f2d45;
+  --border:rgba(99,140,210,0.1);--border2:rgba(99,140,210,0.18);
+  --blue:#3b82f6;--blue-dim:rgba(59,130,246,0.1);--blue-glow:rgba(59,130,246,0.25);--blue-dark:#1d4ed8;
+  --green:#10b981;--green-dim:rgba(16,185,129,0.1);--green-glow:rgba(16,185,129,0.2);
+  --text:#e2e8f4;--text2:#94a3b8;--text3:#3d4f6b;--red:#f87171;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:56px;border-bottom:1px solid var(--border);background:var(--surface);}
-.logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--text);text-decoration:none;letter-spacing:0.04em;}
-.nav-btn{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;padding:0.4rem 0.8rem;border-radius:4px;transition:all 0.2s;text-decoration:none;display:inline-block;}
-.nav-btn:hover{color:var(--text);background:var(--surface2);}
-.mode-tag{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);padding:0.25rem 0.7rem;border-radius:2px;}
-.main{flex:1;max-width:700px;margin:0 auto;padding:3rem 1.5rem;width:100%;}
-#setupScreen h1{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;margin-bottom:0.5rem;}
-#setupScreen h1 em{font-style:italic;color:var(--gold);}
-#setupScreen p{color:var(--muted);margin-bottom:2rem;line-height:1.6;}
-.setup-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem;}
-.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;}
-.setup-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.2rem;cursor:pointer;transition:all 0.2s;text-align:center;}
-.setup-card:hover,.setup-card.selected{border-color:var(--gold);background:var(--gold-dim);}
-.card-icon{font-size:1.8rem;margin-bottom:0.5rem;}
-.card-label{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;}
-.card-desc{font-size:0.8rem;color:var(--muted);}
-.topic-select{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:6px;font-family:'Instrument Sans',sans-serif;font-size:0.9rem;outline:none;margin-bottom:0.8rem;}
-.topic-select:focus{border-color:rgba(212,168,67,0.4);}
-.start-btn{width:100%;background:var(--gold);color:#000;border:none;padding:1rem;border-radius:8px;font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-weight:500;transition:all 0.2s;}
-.start-btn:hover{background:#e8c060;transform:translateY(-2px);}
-#loadingScreen{display:none;text-align:center;padding:4rem;}
-.spinner{width:40px;height:40px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1.5rem;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-weight:300;min-height:100vh;display:flex;flex-direction:column;background-image:radial-gradient(ellipse 80% 50% at 20% -10%,rgba(59,130,246,0.07) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 110%,rgba(16,185,129,0.05) 0%,transparent 60%);}
+
+.topbar{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;border-bottom:1px solid var(--border);background:rgba(8,12,20,0.92);backdrop-filter:blur(20px);flex-shrink:0;}
+.logo{display:flex;align-items:center;gap:0.6rem;font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;letter-spacing:0.08em;color:var(--text);text-decoration:none;}
+.logo-mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,var(--blue),var(--green));display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#fff;box-shadow:0 0 16px var(--blue-glow);}
+.topbar-right{display:flex;align-items:center;gap:0.5rem;}
+.nav-link{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--text2);text-decoration:none;padding:0.4rem 0.8rem;border-radius:6px;transition:all 0.2s;border:1px solid transparent;}
+.nav-link:hover{color:var(--blue);border-color:var(--border2);background:var(--blue-dim);}
+.page-badge{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);background:var(--green-dim);border:1px solid rgba(16,185,129,0.2);padding:0.25rem 0.7rem;border-radius:4px;}
+
+.main{flex:1;max-width:680px;margin:0 auto;padding:3rem 1.5rem;width:100%;}
+
+/* SETUP */
+#setupScreen h1{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.5rem;line-height:1.1;}
+#setupScreen h1 .grad{background:linear-gradient(135deg,var(--blue) 30%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+#setupScreen p{color:var(--text2);margin-bottom:2.5rem;line-height:1.7;font-size:0.9rem;}
+
+.form-label{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3);margin-bottom:0.5rem;display:block;}
+
+.styled-select{width:100%;background:var(--surface);border:1px solid var(--border2);color:var(--text);padding:0.8rem 1rem;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.875rem;outline:none;margin-bottom:1.2rem;transition:border-color 0.2s,box-shadow 0.2s;appearance:none;cursor:pointer;}
+.styled-select:focus{border-color:rgba(59,130,246,0.5);box-shadow:0 0 0 3px rgba(59,130,246,0.08);}
+.styled-select option{background:var(--surface2);}
+
+.diff-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.7rem;margin-bottom:2rem;}
+.diff-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 0.7rem;cursor:pointer;transition:all 0.25s;text-align:center;}
+.diff-card:hover{border-color:rgba(59,130,246,0.3);background:var(--surface2);transform:translateY(-2px);}
+.diff-card.selected{border-color:var(--blue);background:var(--blue-dim);box-shadow:0 0 20px rgba(59,130,246,0.15);}
+.diff-icon{font-size:1.6rem;margin-bottom:0.5rem;display:block;}
+.diff-name{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);margin-bottom:0.2rem;}
+.diff-card:not(.selected) .diff-name{color:var(--text2);}
+.diff-desc{font-size:0.72rem;color:var(--text3);}
+
+.start-btn{width:100%;background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;border:none;padding:1rem;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-weight:500;transition:all 0.25s;box-shadow:0 4px 20px var(--blue-glow);}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--blue-glow);}
+
+/* LOADING */
+#loadingScreen{display:none;text-align:center;padding:5rem 2rem;}
+.spinner{width:44px;height:44px;border:2px solid var(--border2);border-top-color:var(--blue);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 1.5rem;}
 @keyframes spin{to{transform:rotate(360deg)}}
-#loadingScreen p{color:var(--muted);font-size:0.85rem;}
-#loadingScreen p span{color:var(--gold);}
+.loading-label{font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text2);}
+.loading-label span{color:var(--blue);}
+
+/* QUIZ */
 #quizScreen{display:none;}
-.quiz-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
-.quiz-progress-text{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;color:var(--muted);}
-.quiz-progress-text span{color:var(--gold);}
-.timer{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--gold);}
-.timer.urgent{color:var(--red);animation:timerPulse 0.5s infinite;}
-@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:0.5}}
-.progress-bar{width:100%;height:3px;background:var(--surface2);border-radius:2px;margin-bottom:2.5rem;overflow:hidden;}
-.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 0.4s ease;}
-.question-num{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.8rem;}
-#questionText{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;line-height:1.3;margin-bottom:2rem;}
-.options{display:flex;flex-direction:column;gap:0.7rem;}
-.option{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.2s;font-size:0.9rem;}
-.option:hover:not(.locked){border-color:var(--gold);background:var(--gold-dim);}
-.option.correct{border-color:var(--green);background:rgba(74,222,128,0.08);}
-.option.wrong{border-color:var(--red);background:rgba(248,113,113,0.08);}
+.quiz-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.quiz-counter{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;color:var(--text2);}
+.quiz-counter span{color:var(--blue);}
+.timer{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;min-width:48px;text-align:right;}
+.timer.urgent{background:var(--red);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:urgentPulse 0.5s infinite;}
+@keyframes urgentPulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+.progress-track{width:100%;height:2px;background:var(--surface2);border-radius:1px;margin-bottom:2.5rem;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:1px;transition:width 0.5s ease;}
+
+.q-label{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text3);margin-bottom:0.7rem;}
+#questionText{font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:700;line-height:1.35;margin-bottom:2rem;letter-spacing:-0.01em;}
+
+.options{display:flex;flex-direction:column;gap:0.6rem;}
+.option{display:flex;align-items:center;gap:1rem;padding:0.9rem 1.1rem;background:var(--surface);border:1px solid var(--border2);border-radius:9px;cursor:pointer;transition:all 0.2s;font-size:0.875rem;}
+.option:hover:not(.locked){border-color:var(--blue);background:var(--blue-dim);transform:translateX(3px);}
+.option.correct{border-color:var(--green);background:var(--green-dim);}
+.option.wrong{border-color:var(--red);background:rgba(248,113,113,0.07);}
 .option.locked{cursor:default;}
-.option-letter{width:32px;height:32px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:0.75rem;flex-shrink:0;transition:all 0.2s;}
-.option.correct .option-letter{background:var(--green);color:#000;}
-.option.wrong .option-letter{background:var(--red);color:#fff;}
-.explanation-box{margin-top:1.5rem;padding:1rem 1.2rem;background:var(--gold-dim);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:0.85rem;line-height:1.6;color:rgba(232,230,224,0.85);display:none;}
-.next-btn{margin-top:1.5rem;width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:0.9rem;border-radius:8px;font-family:'DM Mono',monospace;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:none;}
-.next-btn:hover{border-color:var(--gold);color:var(--gold);}
-#resultsScreen{display:none;text-align:center;}
-.results-icon{font-size:4rem;margin-bottom:1rem;}
-#resultsScreen h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;margin-bottom:0.5rem;}
-#resultsScreen h2 em{font-style:italic;color:var(--gold);}
-.score-circle{width:140px;height:140px;border-radius:50%;border:3px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:2rem auto;}
-.score-pct{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:var(--gold);line-height:1;}
-.score-sub{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);margin-top:0.3rem;}
-.results-message{color:var(--muted);max-width:400px;margin:0 auto 2rem;line-height:1.6;font-size:0.9rem;}
-.results-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
-.results-actions button{padding:0.8rem 1.5rem;border-radius:6px;font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
-.btn-retry{background:var(--gold);color:#000;border:none;font-weight:500;}
-.btn-retry:hover{background:#e8c060;}
-.btn-tutor{background:var(--surface);border:1px solid var(--border);color:var(--text);}
-.btn-tutor:hover{border-color:var(--gold);color:var(--gold);}
-@media(max-width:600px){.setup-grid{grid-template-columns:1fr 1fr;}.main{padding:2rem 1rem;}}
+.opt-key{width:30px;height:30px;border-radius:7px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:0.68rem;font-weight:500;flex-shrink:0;transition:all 0.2s;color:var(--text2);}
+.option:hover:not(.locked) .opt-key{background:rgba(59,130,246,0.2);color:var(--blue);}
+.option.correct .opt-key{background:var(--green);color:#000;}
+.option.wrong .opt-key{background:var(--red);color:#fff;}
+.opt-text{flex:1;line-height:1.4;}
+.option.correct .opt-text{color:var(--green);}
+.option.wrong .opt-text{color:var(--red);}
+
+.exp-box{margin-top:1.2rem;padding:1rem 1.1rem;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.15);border-left:3px solid var(--green);border-radius:0 8px 8px 0;font-size:0.82rem;color:var(--text2);line-height:1.65;display:none;}
+
+.next-btn{margin-top:1.5rem;width:100%;background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.85rem;border-radius:9px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:none;}
+.next-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-dim);}
+
+/* RESULTS */
+#resultsScreen{display:none;text-align:center;padding:2rem 0;}
+.result-icon{font-size:3.5rem;margin-bottom:1.5rem;display:block;}
+#resultsScreen h2{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:2rem;}
+#resultsScreen h2 .grad{background:linear-gradient(135deg,var(--blue) 30%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+.score-ring{width:150px;height:150px;border-radius:50%;background:conic-gradient(var(--blue) 0deg, var(--green) var(--score-deg, 0deg), var(--surface2) var(--score-deg, 0deg));display:flex;align-items:center;justify-content:center;margin:0 auto 2rem;position:relative;}
+.score-ring::before{content:'';position:absolute;width:118px;height:118px;border-radius:50%;background:var(--bg);}
+.score-inner{position:relative;z-index:1;text-align:center;}
+.score-pct{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.score-frac{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--text3);margin-top:0.2rem;}
+
+.result-msg{color:var(--text2);max-width:420px;margin:0 auto 2.5rem;line-height:1.7;font-size:0.9rem;}
+.result-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn-primary{padding:0.8rem 1.6rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;border:none;box-shadow:0 4px 16px var(--blue-glow);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--blue-glow);}
+.btn-secondary{padding:0.8rem 1.6rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;background:var(--surface);border:1px solid var(--border2);color:var(--text2);text-decoration:none;display:inline-block;}
+.btn-secondary:hover{border-color:var(--green);color:var(--green);background:var(--green-dim);}
+
+@media(max-width:600px){.diff-grid{grid-template-columns:1fr 1fr;}.main{padding:2rem 1rem;}}
 </style>
 </head>
 <body>
 <div class="topbar">
-  <a href="index.html" class="logo">YURITTA</a>
-  <div style="display:flex;align-items:center;gap:1rem">
-    <span class="mode-tag">Quiz Mode</span>
-    <a href="index.html" class="nav-btn">← Tutor</a>
-    <a href="progress.html" class="nav-btn">Progress</a>
+  <a href="index.html" class="logo"><div class="logo-mark">Y</div>YURITTA</a>
+  <div class="topbar-right">
+    <span class="page-badge">Quiz Mode</span>
+    <a href="index.html" class="nav-link">← Tutor</a>
+    <a href="progress.html" class="nav-link">Progress</a>
   </div>
 </div>
 
 <div class="main">
-  <div id="setupScreen">
-    <h1>Test Your <em>Knowledge.</em></h1>
-    <p>Pick a subject, topic, and difficulty. YURITTA generates fresh questions every time.</p>
 
-    <div class="setup-label">Subject</div>
-    <select class="topic-select" id="subjectSelect" onchange="updateTopics()">
+  <!-- SETUP -->
+  <div id="setupScreen">
+    <h1>Test Your <span class="grad">Knowledge.</span></h1>
+    <p>Choose a subject, topic, and difficulty. YURITTA generates fresh questions every time using AI.</p>
+
+    <label class="form-label">Subject</label>
+    <select class="styled-select" id="subjectSel" onchange="updateTopics()">
       <option value="economics">Economics</option>
       <option value="law">Law</option>
       <option value="medicine">Medicine</option>
       <option value="accounting">Accounting</option>
     </select>
 
-    <div class="setup-label">Topic</div>
-    <select class="topic-select" id="topicSelect"></select>
+    <label class="form-label">Topic</label>
+    <select class="styled-select" id="topicSel"></select>
 
-    <div class="setup-label" style="margin-top:1rem">Difficulty</div>
-    <div class="setup-grid">
-      <div class="setup-card selected" onclick="selectDiff(this,'easy')"><div class="card-icon">🌱</div><div class="card-label">Easy</div><div class="card-desc">Foundations</div></div>
-      <div class="setup-card" onclick="selectDiff(this,'medium')"><div class="card-icon">⚡</div><div class="card-label">Medium</div><div class="card-desc">Application</div></div>
-      <div class="setup-card" onclick="selectDiff(this,'hard')"><div class="card-icon">🔥</div><div class="card-label">Hard</div><div class="card-desc">Exam level</div></div>
-      <div class="setup-card" onclick="selectDiff(this,'mixed')"><div class="card-icon">🎯</div><div class="card-label">Mixed</div><div class="card-desc">All levels</div></div>
+    <label class="form-label" style="margin-top:0.5rem">Difficulty</label>
+    <div class="diff-grid">
+      <div class="diff-card selected" onclick="pickDiff(this,'easy')"><span class="diff-icon">🌱</span><div class="diff-name">Easy</div><div class="diff-desc">Foundations</div></div>
+      <div class="diff-card" onclick="pickDiff(this,'medium')"><span class="diff-icon">⚡</span><div class="diff-name">Medium</div><div class="diff-desc">Application</div></div>
+      <div class="diff-card" onclick="pickDiff(this,'hard')"><span class="diff-icon">🔥</span><div class="diff-name">Hard</div><div class="diff-desc">Exam level</div></div>
+      <div class="diff-card" onclick="pickDiff(this,'mixed')"><span class="diff-icon">🎯</span><div class="diff-name">Mixed</div><div class="diff-desc">All levels</div></div>
     </div>
-
     <button class="start-btn" onclick="startQuiz()">Generate Quiz with AI →</button>
   </div>
 
+  <!-- LOADING -->
   <div id="loadingScreen">
     <div class="spinner"></div>
-    <p>Generating your quiz on <span id="loadingTopic">the topic</span>...</p>
+    <div class="loading-label">Generating quiz on <span id="loadTopic">the topic</span>...</div>
   </div>
 
+  <!-- QUIZ -->
   <div id="quizScreen">
-    <div class="quiz-header">
-      <div class="quiz-progress-text">Question <span id="qNum">1</span> of <span id="qTotal">5</span></div>
+    <div class="quiz-meta">
+      <div class="quiz-counter">Question <span id="qNum">1</span> of <span id="qTotal">5</span></div>
       <div class="timer" id="timer">30</div>
     </div>
-    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-    <div class="question-num" id="questionNum">Question 01</div>
+    <div class="progress-track"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+    <div class="q-label" id="qLabel">Question 01</div>
     <div id="questionText">Loading...</div>
-    <div class="options" id="optionsContainer"></div>
-    <div class="explanation-box" id="explanationBox"></div>
-    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+    <div class="options" id="optionsEl"></div>
+    <div class="exp-box" id="expBox"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQ()">Continue →</button>
   </div>
 
+  <!-- RESULTS -->
   <div id="resultsScreen">
-    <div class="results-icon" id="resultsIcon">🎓</div>
-    <h2>Quiz <em>Complete!</em></h2>
-    <div class="score-circle"><div class="score-pct" id="scorePct">0%</div><div class="score-sub" id="scoreDetail">0 / 0</div></div>
-    <p class="results-message" id="resultsMessage"></p>
-    <div class="results-actions">
-      <button class="btn-retry" onclick="retryQuiz()">Try Again</button>
-      <a href="index.html"><button class="btn-tutor">Ask Tutor for Help</button></a>
+    <span class="result-icon" id="resultIcon">🎓</span>
+    <h2>Quiz <span class="grad">Complete.</span></h2>
+    <div class="score-ring" id="scoreRing">
+      <div class="score-inner">
+        <div class="score-pct" id="scorePct">0%</div>
+        <div class="score-frac" id="scoreFrac">0/0</div>
+      </div>
+    </div>
+    <p class="result-msg" id="resultMsg"></p>
+    <div class="result-actions">
+      <button class="btn-primary" onclick="retry()">Try Again</button>
+      <a href="index.html" class="btn-secondary">Ask Tutor for Help</a>
     </div>
   </div>
+
 </div>
 
 <script>
-const TOPICS = {
+const GEMINI_KEY='AIzaSyAO_1lijMuA1TtEaAVi3M24JMeYPUEWDA8';
+const GEMINI_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+const SYSTEM=`You are YURITTA quiz generator. Generate exactly 5 multiple choice questions for African university students. Use Zambian/African examples where possible. Respond ONLY with valid JSON, nothing else:\n{"questions":[{"q":"Question text","options":["Option one","Option two","Option three","Option four"],"answer":0,"explanation":"Why correct, with African/Zambian context where applicable"}]}\nThe answer field is the 0-based index of the correct option. No A) B) prefixes in options.`;
+
+const TOPICS={
   economics:['Partial Derivatives','Elasticity','Total Differentials','Homogeneous Functions','Supply & Demand','GDP & National Income','Market Structures','Monetary Policy','Fiscal Policy','Game Theory','International Trade','Development Economics'],
   law:['Contract Law','Constitutional Law','Criminal Law','Tort Law','Land Law','Administrative Law','Human Rights','Evidence','Company Law','Family Law'],
   medicine:['Anatomy','Physiology','Pharmacology','Pathology','Microbiology','Infectious Diseases','Surgery Basics','Internal Medicine','Public Health','Paediatrics'],
-  accounting:['Financial Statements','Double Entry Bookkeeping','Depreciation','Ratio Analysis','Budgeting','Taxation','Auditing','Cost Accounting','Cash Flow','Company Accounts']
+  accounting:['Financial Statements','Double Entry','Depreciation','Ratio Analysis','Budgeting','Taxation','Auditing','Cost Accounting','Cash Flow','Company Accounts']
 };
 
-const SYSTEM = `You are YURITTA quiz generator. Generate exactly 5 multiple choice questions. Respond ONLY with valid JSON, nothing else:\n{"questions":[{"q":"Question text","options":["Option one","Option two","Option three","Option four"],"answer":0,"explanation":"Explanation with African/Zambian context where possible"}]}\nThe answer field is the 0-based index of the correct option. No A) B) prefixes in options.`;
+let Q={questions:[],current:0,correct:0,difficulty:'easy',topic:'',subject:'economics'};
+let timer=null,timeLeft=30;
 
-let quiz = { questions:[], current:0, correct:0, difficulty:'easy', topic:'', subject:'economics' };
-let timerInterval = null, timeLeft = 30;
-
-function updateTopics() {
-  const sub = document.getElementById('subjectSelect').value;
-  const sel = document.getElementById('topicSelect');
-  sel.innerHTML = TOPICS[sub].map(t=>`<option value="${t}">${t}</option>`).join('');
+function updateTopics(){
+  const sub=document.getElementById('subjectSel').value;
+  document.getElementById('topicSel').innerHTML=TOPICS[sub].map(t=>`<option>${t}</option>`).join('');
 }
 
-function selectDiff(el, diff) {
-  document.querySelectorAll('.setup-card').forEach(c=>c.classList.remove('selected'));
-  el.classList.add('selected');
-  quiz.difficulty = diff;
+function pickDiff(el,d){
+  document.querySelectorAll('.diff-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');Q.difficulty=d;
 }
 
-async function startQuiz() {
-  quiz.subject = document.getElementById('subjectSelect').value;
-  quiz.topic = document.getElementById('topicSelect').value;
-  document.getElementById('loadingTopic').textContent = quiz.topic;
+async function startQuiz(){
+  Q.subject=document.getElementById('subjectSel').value;
+  Q.topic=document.getElementById('topicSel').value;
+  document.getElementById('loadTopic').textContent=Q.topic;
   document.getElementById('setupScreen').style.display='none';
   document.getElementById('loadingScreen').style.display='block';
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYSTEM,messages:[{role:'user',content:`Generate 5 ${quiz.difficulty} difficulty questions on ${quiz.topic} for ${quiz.subject} students in Zambia. Use African examples where possible.`}]})});
-    const data = await res.json();
-    const text = data.content[0].text.trim();
-    const parsed = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}')+1));
-    quiz.questions = parsed.questions; quiz.current = 0; quiz.correct = 0;
-    document.getElementById('qTotal').textContent = quiz.questions.length;
+  try{
+    const res=await fetch(GEMINI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_instruction:{parts:[{text:SYSTEM}]},contents:[{role:'user',parts:[{text:`Generate 5 ${Q.difficulty} difficulty questions on: ${Q.topic} (${Q.subject}). For African university students, use Zambian/African examples where possible.`}]}]})});
+    const data=await res.json();
+    const text=data.candidates[0].content.parts[0].text.trim();
+    const parsed=JSON.parse(text.slice(text.indexOf('{'),text.lastIndexOf('}')+1));
+    Q.questions=parsed.questions;Q.current=0;Q.correct=0;
+    document.getElementById('qTotal').textContent=Q.questions.length;
     document.getElementById('loadingScreen').style.display='none';
     document.getElementById('quizScreen').style.display='block';
-    renderQuestion();
-  } catch(e) {
-    alert('Could not generate quiz. Please check your connection.');
+    renderQ();
+  }catch(e){
+    alert('Could not generate quiz. Please check your connection and try again.');
     document.getElementById('loadingScreen').style.display='none';
     document.getElementById('setupScreen').style.display='block';
   }
 }
 
-function renderQuestion() {
-  const q = quiz.questions[quiz.current]; const num = quiz.current+1; const total = quiz.questions.length;
-  document.getElementById('qNum').textContent = num;
-  document.getElementById('questionNum').textContent = `Question ${String(num).padStart(2,'0')}`;
-  document.getElementById('questionText').textContent = q.q;
-  document.getElementById('progressFill').style.width = ((num-1)/total*100)+'%';
-  document.getElementById('explanationBox').style.display='none';
+function renderQ(){
+  const q=Q.questions[Q.current];const n=Q.current+1;const tot=Q.questions.length;
+  document.getElementById('qNum').textContent=n;
+  document.getElementById('qLabel').textContent=`Question ${String(n).padStart(2,'0')}`;
+  document.getElementById('questionText').textContent=q.q;
+  document.getElementById('progFill').style.width=((n-1)/tot*100)+'%';
+  document.getElementById('expBox').style.display='none';
   document.getElementById('nextBtn').style.display='none';
-  const container = document.getElementById('optionsContainer'); container.innerHTML='';
+  const opts=document.getElementById('optionsEl');opts.innerHTML='';
   q.options.forEach((opt,i)=>{
-    const div=document.createElement('div'); div.className='option';
-    div.innerHTML=`<span class="option-letter">${String.fromCharCode(65+i)}</span>${opt}`;
-    div.onclick=()=>answerQ(i,q.answer,q.explanation); container.appendChild(div);
+    const d=document.createElement('div');d.className='option';
+    d.innerHTML=`<div class="opt-key">${String.fromCharCode(65+i)}</div><div class="opt-text">${opt}</div>`;
+    d.onclick=()=>answer(i,q.answer,q.explanation);opts.appendChild(d);
   });
-  clearInterval(timerInterval); timeLeft=30;
-  document.getElementById('timer').textContent=timeLeft;
-  document.getElementById('timer').classList.remove('urgent');
-  timerInterval=setInterval(()=>{
-    timeLeft--; document.getElementById('timer').textContent=timeLeft;
-    if(timeLeft<=10) document.getElementById('timer').classList.add('urgent');
-    if(timeLeft<=0){clearInterval(timerInterval);lockAll();showExp(q.explanation);document.getElementById('nextBtn').style.display='block';}
+  clearInterval(timer);timeLeft=30;
+  const timerEl=document.getElementById('timer');timerEl.textContent=30;timerEl.classList.remove('urgent');
+  timer=setInterval(()=>{
+    timeLeft--;timerEl.textContent=timeLeft;
+    if(timeLeft<=10)timerEl.classList.add('urgent');
+    if(timeLeft<=0){clearInterval(timer);lockAll();showExp(q.explanation);document.getElementById('nextBtn').style.display='block';}
   },1000);
 }
 
-function answerQ(chosen,correct,explanation){
-  clearInterval(timerInterval);
-  const opts=document.querySelectorAll('.option'); opts.forEach(o=>{o.classList.add('locked');o.onclick=null;});
-  opts[chosen].classList.add(chosen===correct?'correct':'wrong'); opts[correct].classList.add('correct');
-  if(chosen===correct)quiz.correct++;
-  showExp(explanation); document.getElementById('nextBtn').style.display='block';
+function answer(chosen,correct,exp){
+  clearInterval(timer);
+  const opts=document.querySelectorAll('.option');
+  opts.forEach(o=>{o.classList.add('locked');o.onclick=null;});
+  opts[chosen].classList.add(chosen===correct?'correct':'wrong');
+  opts[correct].classList.add('correct');
+  if(chosen===correct)Q.correct++;
+  showExp(exp);document.getElementById('nextBtn').style.display='block';
 }
-function lockAll(){document.querySelectorAll('.option').forEach(o=>{o.classList.add('locked');o.onclick=null;}); const c=quiz.questions[quiz.current].answer; document.querySelectorAll('.option')[c].classList.add('correct');}
-function showExp(text){const b=document.getElementById('explanationBox');b.textContent='💡 '+text;b.style.display='block';}
-function nextQuestion(){quiz.current++;if(quiz.current>=quiz.questions.length)showResults();else renderQuestion();}
+
+function lockAll(){
+  const opts=document.querySelectorAll('.option');
+  opts.forEach(o=>{o.classList.add('locked');o.onclick=null;});
+  opts[Q.questions[Q.current].answer].classList.add('correct');
+}
+
+function showExp(text){
+  const b=document.getElementById('expBox');
+  b.innerHTML=`<strong style="color:var(--green);font-size:0.78rem;font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;text-transform:uppercase;">Explanation</strong><br><br>${text}`;
+  b.style.display='block';
+}
+
+function nextQ(){Q.current++;Q.current>=Q.questions.length?showResults():renderQ();}
 
 function showResults(){
-  clearInterval(timerInterval);
+  clearInterval(timer);
   document.getElementById('quizScreen').style.display='none';
   document.getElementById('resultsScreen').style.display='block';
-  const pct=Math.round((quiz.correct/quiz.questions.length)*100);
+  const pct=Math.round((Q.correct/Q.questions.length)*100);
+  const deg=Math.round(pct/100*360);
+  document.getElementById('scoreRing').style.setProperty('--score-deg',deg+'deg');
   document.getElementById('scorePct').textContent=pct+'%';
-  document.getElementById('scoreDetail').textContent=`${quiz.correct} / ${quiz.questions.length} correct`;
+  document.getElementById('scoreFrac').textContent=`${Q.correct} / ${Q.questions.length}`;
   const tier=pct>=80?'high':pct>=50?'mid':'low';
   const icons={high:'🎓',mid:'📚',low:'💪'};
-  const msgs={high:'Excellent! You clearly understand this topic.',mid:'Good effort. Review your mistakes and try again.',low:"Keep going — every mistake is progress. Ask the tutor for help on what you missed."};
-  document.getElementById('resultsIcon').textContent=icons[tier];
-  document.getElementById('resultsMessage').textContent=msgs[tier];
-  const history=JSON.parse(localStorage.getItem('yuritta_history')||'[]');
-  history.push({date:new Date().toLocaleDateString(),subject:quiz.subject,topic:quiz.topic,score:pct,correct:quiz.correct,total:quiz.questions.length});
-  localStorage.setItem('yuritta_history',JSON.stringify(history.slice(-20)));
+  const msgs={high:'Outstanding performance. You have a strong grasp of this topic.',mid:'Solid effort. Review the questions you missed and try again — you are close.',low:"Keep going. Every mistake is a step forward. Let the tutor explain what you missed."};
+  document.getElementById('resultIcon').textContent=icons[tier];
+  document.getElementById('resultMsg').textContent=msgs[tier];
+  const hist=JSON.parse(localStorage.getItem('yuritta_history')||'[]');
+  hist.push({date:new Date().toLocaleDateString(),subject:Q.subject,topic:Q.topic,score:pct,correct:Q.correct,total:Q.questions.length});
+  localStorage.setItem('yuritta_history',JSON.stringify(hist.slice(-30)));
 }
 
-function retryQuiz(){document.getElementById('resultsScreen').style.display='none';document.getElementById('setupScreen').style.display='block';}
+function retry(){document.getElementById('resultsScreen').style.display='none';document.getElementById('setupScreen').style.display='block';}
 
-// Init
 updateTopics();
 </script>
 </body>
