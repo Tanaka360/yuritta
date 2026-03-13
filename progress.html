@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YURITTA — My Progress</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e0e0f;--surface:#161618;--surface2:#1e1e21;--border:rgba(255,255,255,0.07);--gold:#d4a843;--gold-dim:rgba(212,168,67,0.12);--text:#e8e6e0;--muted:#6b6a66;--green:#4ade80;--red:#f87171;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-serif;min-height:100vh;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:56px;border-bottom:1px solid var(--border);background:var(--surface);}
+.logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--text);text-decoration:none;letter-spacing:0.04em;}
+.nav-btn{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;padding:0.4rem 0.8rem;border-radius:4px;transition:all 0.2s;text-decoration:none;display:inline-block;}
+.nav-btn:hover{color:var(--text);background:var(--surface2);}
+.mode-tag{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);padding:0.25rem 0.7rem;border-radius:2px;}
+.main{max-width:900px;margin:0 auto;padding:3rem 1.5rem;}
+h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;margin-bottom:0.4rem;}
+h1 em{font-style:italic;color:var(--gold);}
+.subtitle{color:var(--muted);margin-bottom:2.5rem;font-size:0.9rem;}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.2rem;text-align:center;}
+.stat-val{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--gold);display:block;margin-bottom:0.3rem;}
+.stat-lbl{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+.section-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:0.8rem;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.subject-tabs{display:flex;gap:0.4rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.stab{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.35rem 0.8rem;border-radius:3px;cursor:pointer;border:1px solid var(--border);color:var(--muted);background:none;transition:all 0.2s;}
+.stab:hover,.stab.active{background:var(--gold-dim);color:var(--gold);border-color:rgba(212,168,67,0.3);}
+.bar-chart{display:flex;align-items:flex-end;gap:0.5rem;height:120px;margin-bottom:2.5rem;}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.3rem;}
+.bar{width:100%;background:var(--gold);border-radius:3px 3px 0 0;min-height:4px;}
+.bar-label{font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--muted);text-align:center;}
+.history-table{width:100%;border-collapse:collapse;margin-bottom:2rem;}
+.history-table th{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:0.6rem 1rem;text-align:left;border-bottom:1px solid var(--border);}
+.history-table td{padding:0.8rem 1rem;border-bottom:1px solid var(--border);font-size:0.85rem;}
+.history-table tr:last-child td{border-bottom:none;}
+.score-pill{display:inline-block;padding:0.2rem 0.6rem;border-radius:20px;font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:500;}
+.score-high{background:rgba(74,222,128,0.12);color:var(--green);}
+.score-mid{background:var(--gold-dim);color:var(--gold);}
+.score-low{background:rgba(248,113,113,0.1);color:var(--red);}
+.subject-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.06em;text-transform:uppercase;padding:0.15rem 0.5rem;border-radius:2px;background:var(--surface2);color:var(--muted);}
+.empty-state{text-align:center;padding:3rem;color:var(--muted);}
+.empty-state .big{font-size:2.5rem;margin-bottom:1rem;}
+.empty-state p{font-size:0.9rem;margin-bottom:1.5rem;line-height:1.6;}
+.cta-btn{display:inline-block;background:var(--gold);color:#000;padding:0.7rem 1.5rem;border-radius:6px;font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;font-weight:500;text-decoration:none;transition:all 0.2s;}
+.cta-btn:hover{background:#e8c060;}
+.clear-btn{background:none;border:1px solid var(--border);color:var(--muted);padding:0.4rem 0.8rem;border-radius:4px;font-family:'DM Mono',monospace;font-size:0.65rem;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;float:right;margin-top:-2rem;margin-bottom:1rem;}
+.clear-btn:hover{border-color:var(--red);color:var(--red);}
+@media(max-width:600px){.stats-row{grid-template-columns:1fr 1fr;}.main{padding:2rem 1rem;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="index.html" class="logo">YURITTA</a>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <span class="mode-tag">Progress</span>
+    <a href="index.html" class="nav-btn">Tutor</a>
+    <a href="quiz.html" class="nav-btn">Quiz</a>
+  </div>
+</div>
+
+<div class="main">
+  <h1>Your <em>Progress.</em></h1>
+  <p class="subtitle">Every quiz you complete across all your subjects is tracked here.</p>
+  <div class="stats-row">
+    <div class="stat-card"><span class="stat-val" id="totalQuizzes">0</span><span class="stat-lbl">Quizzes Done</span></div>
+    <div class="stat-card"><span class="stat-val" id="avgScore">—</span><span class="stat-lbl">Avg Score</span></div>
+    <div class="stat-card"><span class="stat-val" id="bestScore">—</span><span class="stat-lbl">Best Score</span></div>
+    <div class="stat-card"><span class="stat-val" id="subjectsCount">0</span><span class="stat-lbl">Subjects Studied</span></div>
+  </div>
+  <div id="contentArea"></div>
+</div>
+
+<script>
+let activeFilter = 'all';
+
+function loadProgress() {
+  const history = JSON.parse(localStorage.getItem('yuritta_history') || '[]');
+  const area = document.getElementById('contentArea');
+  if (history.length === 0) {
+    area.innerHTML = `<div class="empty-state"><div class="big">📊</div><p>No quiz history yet. Complete your first quiz to start tracking your progress.</p><a href="quiz.html" class="cta-btn">Start a Quiz →</a></div>`;
+    return;
+  }
+  const scores = history.map(h=>h.score);
+  const subjects = [...new Set(history.map(h=>h.subject))];
+  document.getElementById('totalQuizzes').textContent = history.length;
+  document.getElementById('avgScore').textContent = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length)+'%';
+  document.getElementById('bestScore').textContent = Math.max(...scores)+'%';
+  document.getElementById('subjectsCount').textContent = subjects.length;
+
+  const tabs = ['all',...subjects].map(s=>`<button class="stab${s===activeFilter?' active':''}" onclick="filterSubject('${s}')">${s==='all'?'All Subjects':s.charAt(0).toUpperCase()+s.slice(1)}</button>`).join('');
+  const filtered = activeFilter==='all' ? history : history.filter(h=>h.subject===activeFilter);
+  const recent = filtered.slice(-8);
+  const bars = recent.map(h=>`<div class="bar-wrap"><div class="bar" style="height:${h.score}px;opacity:${h.score>=80?1:h.score>=50?0.7:0.45}"></div><div class="bar-label">${h.score}%</div></div>`).join('');
+  const rows = filtered.slice().reverse().map(h=>{
+    const cls=h.score>=80?'score-high':h.score>=50?'score-mid':'score-low';
+    return `<tr><td>${h.date}</td><td><span class="subject-badge">${h.subject||'economics'}</span></td><td>${h.topic}</td><td>${h.correct}/${h.total}</td><td><span class="score-pill ${cls}">${h.score}%</span></td></tr>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="subject-tabs">${tabs}</div>
+    <div class="section-label">Score Trend</div>
+    <div class="bar-chart">${bars}</div>
+    <div class="section-label">Quiz History</div>
+    <button class="clear-btn" onclick="clearHistory()">Clear All</button>
+    <table class="history-table">
+      <thead><tr><th>Date</th><th>Subject</th><th>Topic</th><th>Result</th><th>Score</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+function filterSubject(subject) { activeFilter = subject; loadProgress(); }
+function clearHistory() { if(confirm('Clear all quiz history?')){localStorage.removeItem('yuritta_history');location.reload();} }
+
+loadProgress();
+</script>
+</body>
+</html>

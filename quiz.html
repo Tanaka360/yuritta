@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YURITTA — Quiz Mode</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e0e0f;--surface:#161618;--surface2:#1e1e21;--border:rgba(255,255,255,0.07);--gold:#d4a843;--gold-dim:rgba(212,168,67,0.12);--text:#e8e6e0;--muted:#6b6a66;--green:#4ade80;--red:#f87171;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:56px;border-bottom:1px solid var(--border);background:var(--surface);}
+.logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--text);text-decoration:none;letter-spacing:0.04em;}
+.nav-btn{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;padding:0.4rem 0.8rem;border-radius:4px;transition:all 0.2s;text-decoration:none;display:inline-block;}
+.nav-btn:hover{color:var(--text);background:var(--surface2);}
+.mode-tag{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);padding:0.25rem 0.7rem;border-radius:2px;}
+.main{flex:1;max-width:700px;margin:0 auto;padding:3rem 1.5rem;width:100%;}
+#setupScreen h1{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;margin-bottom:0.5rem;}
+#setupScreen h1 em{font-style:italic;color:var(--gold);}
+#setupScreen p{color:var(--muted);margin-bottom:2rem;line-height:1.6;}
+.setup-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem;}
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;}
+.setup-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.2rem;cursor:pointer;transition:all 0.2s;text-align:center;}
+.setup-card:hover,.setup-card.selected{border-color:var(--gold);background:var(--gold-dim);}
+.card-icon{font-size:1.8rem;margin-bottom:0.5rem;}
+.card-label{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;}
+.card-desc{font-size:0.8rem;color:var(--muted);}
+.topic-select{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:0.8rem 1rem;border-radius:6px;font-family:'Instrument Sans',sans-serif;font-size:0.9rem;outline:none;margin-bottom:0.8rem;}
+.topic-select:focus{border-color:rgba(212,168,67,0.4);}
+.start-btn{width:100%;background:var(--gold);color:#000;border:none;padding:1rem;border-radius:8px;font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-weight:500;transition:all 0.2s;}
+.start-btn:hover{background:#e8c060;transform:translateY(-2px);}
+#loadingScreen{display:none;text-align:center;padding:4rem;}
+.spinner{width:40px;height:40px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1.5rem;}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loadingScreen p{color:var(--muted);font-size:0.85rem;}
+#loadingScreen p span{color:var(--gold);}
+#quizScreen{display:none;}
+.quiz-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
+.quiz-progress-text{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;color:var(--muted);}
+.quiz-progress-text span{color:var(--gold);}
+.timer{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--gold);}
+.timer.urgent{color:var(--red);animation:timerPulse 0.5s infinite;}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.progress-bar{width:100%;height:3px;background:var(--surface2);border-radius:2px;margin-bottom:2.5rem;overflow:hidden;}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 0.4s ease;}
+.question-num{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.8rem;}
+#questionText{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;line-height:1.3;margin-bottom:2rem;}
+.options{display:flex;flex-direction:column;gap:0.7rem;}
+.option{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.2s;font-size:0.9rem;}
+.option:hover:not(.locked){border-color:var(--gold);background:var(--gold-dim);}
+.option.correct{border-color:var(--green);background:rgba(74,222,128,0.08);}
+.option.wrong{border-color:var(--red);background:rgba(248,113,113,0.08);}
+.option.locked{cursor:default;}
+.option-letter{width:32px;height:32px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:0.75rem;flex-shrink:0;transition:all 0.2s;}
+.option.correct .option-letter{background:var(--green);color:#000;}
+.option.wrong .option-letter{background:var(--red);color:#fff;}
+.explanation-box{margin-top:1.5rem;padding:1rem 1.2rem;background:var(--gold-dim);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:0.85rem;line-height:1.6;color:rgba(232,230,224,0.85);display:none;}
+.next-btn{margin-top:1.5rem;width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:0.9rem;border-radius:8px;font-family:'DM Mono',monospace;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:none;}
+.next-btn:hover{border-color:var(--gold);color:var(--gold);}
+#resultsScreen{display:none;text-align:center;}
+.results-icon{font-size:4rem;margin-bottom:1rem;}
+#resultsScreen h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;margin-bottom:0.5rem;}
+#resultsScreen h2 em{font-style:italic;color:var(--gold);}
+.score-circle{width:140px;height:140px;border-radius:50%;border:3px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:2rem auto;}
+.score-pct{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:var(--gold);line-height:1;}
+.score-sub{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);margin-top:0.3rem;}
+.results-message{color:var(--muted);max-width:400px;margin:0 auto 2rem;line-height:1.6;font-size:0.9rem;}
+.results-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.results-actions button{padding:0.8rem 1.5rem;border-radius:6px;font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
+.btn-retry{background:var(--gold);color:#000;border:none;font-weight:500;}
+.btn-retry:hover{background:#e8c060;}
+.btn-tutor{background:var(--surface);border:1px solid var(--border);color:var(--text);}
+.btn-tutor:hover{border-color:var(--gold);color:var(--gold);}
+@media(max-width:600px){.setup-grid{grid-template-columns:1fr 1fr;}.main{padding:2rem 1rem;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="index.html" class="logo">YURITTA</a>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <span class="mode-tag">Quiz Mode</span>
+    <a href="index.html" class="nav-btn">← Tutor</a>
+    <a href="progress.html" class="nav-btn">Progress</a>
+  </div>
+</div>
+
+<div class="main">
+  <div id="setupScreen">
+    <h1>Test Your <em>Knowledge.</em></h1>
+    <p>Pick a subject, topic, and difficulty. YURITTA generates fresh questions every time.</p>
+
+    <div class="setup-label">Subject</div>
+    <select class="topic-select" id="subjectSelect" onchange="updateTopics()">
+      <option value="economics">Economics</option>
+      <option value="law">Law</option>
+      <option value="medicine">Medicine</option>
+      <option value="accounting">Accounting</option>
+    </select>
+
+    <div class="setup-label">Topic</div>
+    <select class="topic-select" id="topicSelect"></select>
+
+    <div class="setup-label" style="margin-top:1rem">Difficulty</div>
+    <div class="setup-grid">
+      <div class="setup-card selected" onclick="selectDiff(this,'easy')"><div class="card-icon">🌱</div><div class="card-label">Easy</div><div class="card-desc">Foundations</div></div>
+      <div class="setup-card" onclick="selectDiff(this,'medium')"><div class="card-icon">⚡</div><div class="card-label">Medium</div><div class="card-desc">Application</div></div>
+      <div class="setup-card" onclick="selectDiff(this,'hard')"><div class="card-icon">🔥</div><div class="card-label">Hard</div><div class="card-desc">Exam level</div></div>
+      <div class="setup-card" onclick="selectDiff(this,'mixed')"><div class="card-icon">🎯</div><div class="card-label">Mixed</div><div class="card-desc">All levels</div></div>
+    </div>
+
+    <button class="start-btn" onclick="startQuiz()">Generate Quiz with AI →</button>
+  </div>
+
+  <div id="loadingScreen">
+    <div class="spinner"></div>
+    <p>Generating your quiz on <span id="loadingTopic">the topic</span>...</p>
+  </div>
+
+  <div id="quizScreen">
+    <div class="quiz-header">
+      <div class="quiz-progress-text">Question <span id="qNum">1</span> of <span id="qTotal">5</span></div>
+      <div class="timer" id="timer">30</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="question-num" id="questionNum">Question 01</div>
+    <div id="questionText">Loading...</div>
+    <div class="options" id="optionsContainer"></div>
+    <div class="explanation-box" id="explanationBox"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+  </div>
+
+  <div id="resultsScreen">
+    <div class="results-icon" id="resultsIcon">🎓</div>
+    <h2>Quiz <em>Complete!</em></h2>
+    <div class="score-circle"><div class="score-pct" id="scorePct">0%</div><div class="score-sub" id="scoreDetail">0 / 0</div></div>
+    <p class="results-message" id="resultsMessage"></p>
+    <div class="results-actions">
+      <button class="btn-retry" onclick="retryQuiz()">Try Again</button>
+      <a href="index.html"><button class="btn-tutor">Ask Tutor for Help</button></a>
+    </div>
+  </div>
+</div>
+
+<script>
+const TOPICS = {
+  economics:['Partial Derivatives','Elasticity','Total Differentials','Homogeneous Functions','Supply & Demand','GDP & National Income','Market Structures','Monetary Policy','Fiscal Policy','Game Theory','International Trade','Development Economics'],
+  law:['Contract Law','Constitutional Law','Criminal Law','Tort Law','Land Law','Administrative Law','Human Rights','Evidence','Company Law','Family Law'],
+  medicine:['Anatomy','Physiology','Pharmacology','Pathology','Microbiology','Infectious Diseases','Surgery Basics','Internal Medicine','Public Health','Paediatrics'],
+  accounting:['Financial Statements','Double Entry Bookkeeping','Depreciation','Ratio Analysis','Budgeting','Taxation','Auditing','Cost Accounting','Cash Flow','Company Accounts']
+};
+
+const SYSTEM = `You are YURITTA quiz generator. Generate exactly 5 multiple choice questions. Respond ONLY with valid JSON, nothing else:\n{"questions":[{"q":"Question text","options":["Option one","Option two","Option three","Option four"],"answer":0,"explanation":"Explanation with African/Zambian context where possible"}]}\nThe answer field is the 0-based index of the correct option. No A) B) prefixes in options.`;
+
+let quiz = { questions:[], current:0, correct:0, difficulty:'easy', topic:'', subject:'economics' };
+let timerInterval = null, timeLeft = 30;
+
+function updateTopics() {
+  const sub = document.getElementById('subjectSelect').value;
+  const sel = document.getElementById('topicSelect');
+  sel.innerHTML = TOPICS[sub].map(t=>`<option value="${t}">${t}</option>`).join('');
+}
+
+function selectDiff(el, diff) {
+  document.querySelectorAll('.setup-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  quiz.difficulty = diff;
+}
+
+async function startQuiz() {
+  quiz.subject = document.getElementById('subjectSelect').value;
+  quiz.topic = document.getElementById('topicSelect').value;
+  document.getElementById('loadingTopic').textContent = quiz.topic;
+  document.getElementById('setupScreen').style.display='none';
+  document.getElementById('loadingScreen').style.display='block';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYSTEM,messages:[{role:'user',content:`Generate 5 ${quiz.difficulty} difficulty questions on ${quiz.topic} for ${quiz.subject} students in Zambia. Use African examples where possible.`}]})});
+    const data = await res.json();
+    const text = data.content[0].text.trim();
+    const parsed = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}')+1));
+    quiz.questions = parsed.questions; quiz.current = 0; quiz.correct = 0;
+    document.getElementById('qTotal').textContent = quiz.questions.length;
+    document.getElementById('loadingScreen').style.display='none';
+    document.getElementById('quizScreen').style.display='block';
+    renderQuestion();
+  } catch(e) {
+    alert('Could not generate quiz. Please check your connection.');
+    document.getElementById('loadingScreen').style.display='none';
+    document.getElementById('setupScreen').style.display='block';
+  }
+}
+
+function renderQuestion() {
+  const q = quiz.questions[quiz.current]; const num = quiz.current+1; const total = quiz.questions.length;
+  document.getElementById('qNum').textContent = num;
+  document.getElementById('questionNum').textContent = `Question ${String(num).padStart(2,'0')}`;
+  document.getElementById('questionText').textContent = q.q;
+  document.getElementById('progressFill').style.width = ((num-1)/total*100)+'%';
+  document.getElementById('explanationBox').style.display='none';
+  document.getElementById('nextBtn').style.display='none';
+  const container = document.getElementById('optionsContainer'); container.innerHTML='';
+  q.options.forEach((opt,i)=>{
+    const div=document.createElement('div'); div.className='option';
+    div.innerHTML=`<span class="option-letter">${String.fromCharCode(65+i)}</span>${opt}`;
+    div.onclick=()=>answerQ(i,q.answer,q.explanation); container.appendChild(div);
+  });
+  clearInterval(timerInterval); timeLeft=30;
+  document.getElementById('timer').textContent=timeLeft;
+  document.getElementById('timer').classList.remove('urgent');
+  timerInterval=setInterval(()=>{
+    timeLeft--; document.getElementById('timer').textContent=timeLeft;
+    if(timeLeft<=10) document.getElementById('timer').classList.add('urgent');
+    if(timeLeft<=0){clearInterval(timerInterval);lockAll();showExp(q.explanation);document.getElementById('nextBtn').style.display='block';}
+  },1000);
+}
+
+function answerQ(chosen,correct,explanation){
+  clearInterval(timerInterval);
+  const opts=document.querySelectorAll('.option'); opts.forEach(o=>{o.classList.add('locked');o.onclick=null;});
+  opts[chosen].classList.add(chosen===correct?'correct':'wrong'); opts[correct].classList.add('correct');
+  if(chosen===correct)quiz.correct++;
+  showExp(explanation); document.getElementById('nextBtn').style.display='block';
+}
+function lockAll(){document.querySelectorAll('.option').forEach(o=>{o.classList.add('locked');o.onclick=null;}); const c=quiz.questions[quiz.current].answer; document.querySelectorAll('.option')[c].classList.add('correct');}
+function showExp(text){const b=document.getElementById('explanationBox');b.textContent='💡 '+text;b.style.display='block';}
+function nextQuestion(){quiz.current++;if(quiz.current>=quiz.questions.length)showResults();else renderQuestion();}
+
+function showResults(){
+  clearInterval(timerInterval);
+  document.getElementById('quizScreen').style.display='none';
+  document.getElementById('resultsScreen').style.display='block';
+  const pct=Math.round((quiz.correct/quiz.questions.length)*100);
+  document.getElementById('scorePct').textContent=pct+'%';
+  document.getElementById('scoreDetail').textContent=`${quiz.correct} / ${quiz.questions.length} correct`;
+  const tier=pct>=80?'high':pct>=50?'mid':'low';
+  const icons={high:'🎓',mid:'📚',low:'💪'};
+  const msgs={high:'Excellent! You clearly understand this topic.',mid:'Good effort. Review your mistakes and try again.',low:"Keep going — every mistake is progress. Ask the tutor for help on what you missed."};
+  document.getElementById('resultsIcon').textContent=icons[tier];
+  document.getElementById('resultsMessage').textContent=msgs[tier];
+  const history=JSON.parse(localStorage.getItem('yuritta_history')||'[]');
+  history.push({date:new Date().toLocaleDateString(),subject:quiz.subject,topic:quiz.topic,score:pct,correct:quiz.correct,total:quiz.questions.length});
+  localStorage.setItem('yuritta_history',JSON.stringify(history.slice(-20)));
+}
+
+function retryQuiz(){document.getElementById('resultsScreen').style.display='none';document.getElementById('setupScreen').style.display='block';}
+
+// Init
+updateTopics();
+</script>
+</body>
+</html>
