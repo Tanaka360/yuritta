@@ -210,7 +210,95 @@ textarea:focus{border-color:rgba(26,53,88,0.4);box-shadow:0 0 0 3px var(--navy-d
 .input-hint{font-family:'Space Mono',monospace;font-size:0.52rem;color:var(--text4);text-align:center;margin-top:0.45rem;letter-spacing:0.04em;}
 .input-hint span{color:var(--navy);}
 
-@media(max-width:700px){.sidebar,.subject-nav{display:none}.messages{padding:1rem}.input-area{padding:0.6rem 1rem 1rem}}
+/* ── MOBILE ───────────────────────────────────── */
+@media(max-width:700px){
+  .sidebar{display:none;}
+  .subject-nav{display:none;}
+  .messages{padding:1rem;}
+  .input-area{padding:0.6rem 1rem 0.6rem;}
+  body{padding-bottom:64px;}
+
+  /* Bottom nav bar */
+  .mobile-nav{display:flex;}
+
+  /* Drawer */
+  .drawer-overlay{display:block;}
+}
+
+@media(min-width:701px){
+  .mobile-nav{display:none !important;}
+  .drawer-overlay{display:none !important;}
+  .drawer{display:none !important;}
+}
+
+/* Bottom nav */
+.mobile-nav{
+  position:fixed;bottom:0;left:0;right:0;height:60px;
+  background:var(--navy2);
+  border-top:0.5px solid rgba(255,255,255,0.1);
+  z-index:100;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 0.5rem;
+  display:none;
+}
+.mob-btn{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:none;border:none;color:rgba(255,255,255,0.5);
+  cursor:pointer;padding:0.4rem 0.8rem;border-radius:8px;
+  font-family:'Space Mono',monospace;font-size:0.5rem;letter-spacing:0.04em;text-transform:uppercase;
+  transition:all 0.2s;flex:1;text-decoration:none;
+}
+.mob-btn:hover,.mob-btn.active{color:white;background:rgba(255,255,255,0.1);}
+.mob-btn svg{width:20px;height:20px;}
+.mob-btn span{font-size:0.48rem;}
+
+/* Drawer overlay */
+.drawer-overlay{
+  display:none;
+  position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;
+  animation:fadeOverlay 0.2s ease;
+}
+@keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+
+/* Drawer panel */
+.drawer{
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--surface);
+  border-radius:18px 18px 0 0;
+  border-top:0.5px solid var(--border2);
+  z-index:201;
+  max-height:85vh;
+  overflow-y:auto;
+  animation:slideUp 0.28s cubic-bezier(0.34,1.56,0.64,1);
+  padding-bottom:80px;
+}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.drawer-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:12px auto 4px;}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:0.6rem 1.2rem 0.4rem;}
+.drawer-title{font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);}
+.drawer-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.2rem;padding:0.2rem 0.4rem;}
+
+/* Programme tabs inside drawer */
+.drawer-progs{display:flex;gap:0.4rem;padding:0 1.2rem 0.8rem;flex-wrap:wrap;}
+.drawer-prog{font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.04em;text-transform:uppercase;padding:0.4rem 0.9rem;border-radius:20px;border:0.5px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;transition:all 0.18s;}
+.drawer-prog.active{background:var(--navy2);color:white;border-color:var(--navy2);}
+
+/* Sections inside drawer */
+.drawer-section{padding:0 1.2rem 1rem;}
+.drawer-section-label{font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--text3);margin-bottom:0.6rem;}
+.drawer-year{font-family:'Space Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);font-weight:700;padding:0.5rem 0 0.25rem;}
+.drawer-course{font-size:0.82rem;padding:0.4rem 0.65rem;border-radius:6px;color:var(--text2);cursor:pointer;transition:all 0.15s;border:0.5px solid transparent;margin-bottom:0.15rem;line-height:1.35;}
+.drawer-course:hover,.drawer-course.active{background:var(--green-dim);color:var(--green2);border-color:var(--green-mid);}
+
+/* Upload in drawer */
+.drawer-upload{border:1.5px dashed var(--border2);border-radius:8px;padding:0.9rem;text-align:center;cursor:pointer;position:relative;background:var(--surface2);margin-bottom:0.6rem;}
+.drawer-upload input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.drawer-upload-txt{font-size:0.78rem;color:var(--text2);line-height:1.4;}
+.drawer-upload-txt strong{color:var(--navy);display:block;font-weight:600;margin-bottom:0.1rem;}
+
+/* Mode chips in drawer */
+.drawer-modes{display:flex;flex-wrap:wrap;gap:0.35rem;padding:0 1.2rem 1rem;}
 </style>
 </head>
 <body>
@@ -295,6 +383,75 @@ textarea:focus{border-color:rgba(26,53,88,0.4);box-shadow:0 0 0 3px var(--navy-d
         </button>
       </div>
       <div class="input-hint">Press <span>Enter</span> to send · <span>Shift+Enter</span> for new line</div>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav">
+  <button class="mob-btn active" onclick="mobNav('tutor')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+    <span>Tutor</span>
+  </button>
+  <button class="mob-btn" onclick="window.location='quiz.html'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+    <span>Quiz</span>
+  </button>
+  <button class="mob-btn" onclick="window.location='progress.html'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    <span>Progress</span>
+  </button>
+  <button class="mob-btn" onclick="openDrawer()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    <span>Menu</span>
+  </button>
+</nav>
+
+<!-- DRAWER OVERLAY -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()" style="display:none"></div>
+
+<!-- DRAWER PANEL -->
+<div class="drawer" id="drawer" style="display:none">
+  <div class="drawer-handle"></div>
+  <div class="drawer-header">
+    <span class="drawer-title">Programme &amp; Courses</span>
+    <button class="drawer-close" onclick="closeDrawer()">&#x2715;</button>
+  </div>
+  <div class="drawer-progs">
+    <button class="drawer-prog active" id="dp-economics" onclick="drawerSetSubject('economics')">Economics</button>
+    <button class="drawer-prog" id="dp-clinical" onclick="drawerSetSubject('clinical')">Clinical Sciences</button>
+    <button class="drawer-prog" id="dp-development" onclick="drawerSetSubject('development')">Development Studies</button>
+  </div>
+  <div class="drawer-section">
+    <div class="drawer-section-label">Mode</div>
+    <div class="drawer-modes">
+      <span class="mode-chip active" onclick="setMode(this,'tutor');closeDrawer()">&#x1F4AC; Ask tutor</span>
+      <span class="mode-chip" onclick="setMode(this,'explain');closeDrawer()">&#x1F4D6; Explain</span>
+      <span class="mode-chip" onclick="setMode(this,'quiz');closeDrawer()">&#x26A1; Quiz</span>
+      <span class="mode-chip" onclick="setMode(this,'solve');closeDrawer()">&#x1F522; Solve</span>
+      <span class="mode-chip story" id="drawerStoryChip" onclick="setMode(this,'story');closeDrawer()" style="display:none">&#x1F4DA; Story mode</span>
+    </div>
+  </div>
+  <div class="drawer-section">
+    <div class="drawer-section-label">Your Notes</div>
+    <div class="drawer-upload">
+      <input type="file" accept=".pdf,.txt,.docx" multiple onchange="handleUpload(this)">
+      <div class="drawer-upload-txt"><strong>&#x1F4C4; Upload lecture notes</strong>YURITTA reads and teaches from your content</div>
+    </div>
+    <div id="drawerDocList" style="display:flex;flex-direction:column;gap:0.3rem;margin-bottom:0.5rem;"></div>
+    <button id="drawerStoryBtn" onclick="startStoryMode();closeDrawer()" style="display:none;width:100%;background:var(--green-dim);border:0.5px solid var(--green-mid);color:var(--green2);font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.06em;text-transform:uppercase;padding:0.55rem;border-radius:7px;cursor:pointer;">&#x1F4D6; Teach me from my notes</button>
+  </div>
+  <div class="drawer-section">
+    <div class="drawer-section-label">Courses</div>
+    <div id="drawerCourseList"></div>
+  </div>
+  <div class="drawer-section">
+    <div class="drawer-section-label">Session</div>
+    <div class="stats-grid">
+      <div class="stat-tile"><span class="stat-val" id="mStatQ">0</span><span class="stat-lbl">Questions</span></div>
+      <div class="stat-tile"><span class="stat-val green" id="mStatQz">&#x2014;</span><span class="stat-lbl">Score</span></div>
+      <div class="stat-tile"><span class="stat-val" id="mStatD">0</span><span class="stat-lbl">Docs</span></div>
+      <div class="stat-tile"><span class="stat-val" id="mStatT">0</span><span class="stat-lbl">Topics</span></div>
     </div>
   </div>
 </div>
@@ -393,7 +550,7 @@ async function send(custom){
   inp.value='';autoResize(inp);
   document.getElementById('sendBtn').disabled=true;
   addMsg('user',msg);S.messages.push({role:'user',content:msg});
-  S.questions++;document.getElementById('statQ').textContent=S.questions;
+  S.questions++;syncStats();
   const tid=showTyping();
   try{
     const reply=await callGemini(msg);removeTyping(tid);
@@ -452,8 +609,7 @@ function answerQ(qi,chosen,correct,wid){
   opts.forEach(o=>o.style.pointerEvents='none');
   opts[chosen].classList.add(chosen===correct?'correct':'wrong');opts[correct].classList.add('correct');
   document.getElementById(`qe-${qi}`).style.display='block';
-  if(chosen===correct)S.qCorrect++;S.qTotal++;
-  document.getElementById('statQz').textContent=Math.round((S.qCorrect/S.qTotal)*100)+'%';
+  if(chosen===correct)S.qCorrect++;S.qTotal++;syncStats();
 }
 
 // ── CONTROLS ─────────────────────────────────────
@@ -487,15 +643,67 @@ function handleUpload(inp){
   Array.from(inp.files).forEach(f=>{
     S.docs.push({name:f.name});
     if(f.type==='text/plain'){const r=new FileReader();r.onload=e=>{S.docContents[f.name]=e.target.result.slice(0,8000);};r.readAsText(f);}
-    const list=document.getElementById('docList');const row=document.createElement('div');row.className='doc-row';
-    row.innerHTML=`<span>📄</span><span class="doc-name" title="${f.name}">${f.name.length>22?f.name.slice(0,20)+'…':f.name}</span><span class="doc-badge">ready</span>`;
-    list.appendChild(row);document.getElementById('statD').textContent=S.docs.length;
-    document.getElementById('storyBtn').classList.add('show');document.getElementById('storyChip').style.display='inline-block';
+    const makeRow=()=>{const row=document.createElement('div');row.className='doc-row';row.innerHTML=`<span>📄</span><span class="doc-name" title="${f.name}">${f.name.length>22?f.name.slice(0,20)+'…':f.name}</span><span class="doc-badge">ready</span>`;return row;};
+    document.getElementById('docList').appendChild(makeRow());
+    document.getElementById('drawerDocList').appendChild(makeRow());
+    syncStats();
+    document.getElementById('storyBtn').classList.add('show');
+    document.getElementById('storyChip').style.display='inline-block';
+    document.getElementById('drawerStoryBtn').style.display='block';
+    document.getElementById('drawerStoryChip').style.display='inline-block';
   });
+}
+function syncStats(){
+  const q=S.questions,d=S.docs.length,t=S.topics.size,qz=S.qTotal>0?Math.round((S.qCorrect/S.qTotal)*100)+'%':'—';
+  ['statQ','mStatQ'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=q;});
+  ['statD','mStatD'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=d;});
+  ['statT','mStatT'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=t;});
+  ['statQz','mStatQz'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=qz;});
+}
+
+// ── DRAWER ────────────────────────────────────────
+function openDrawer(){
+  document.getElementById('drawer').style.display='block';
+  document.getElementById('drawerOverlay').style.display='block';
+  renderDrawerCourses();
+  document.body.style.overflow='hidden';
+}
+function closeDrawer(){
+  document.getElementById('drawer').style.display='none';
+  document.getElementById('drawerOverlay').style.display='none';
+  document.body.style.overflow='';
+}
+function drawerSetSubject(sub){
+  setSubject({classList:{remove:()=>{},add:()=>{}}},sub);
+  document.querySelectorAll('.drawer-prog').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById('dp-'+sub);if(btn)btn.classList.add('active');
+  // Also sync desktop subject nav
+  document.querySelectorAll('.sub-btn').forEach(b=>{b.classList.toggle('active',b.textContent.toLowerCase().includes(sub==='clinical'?'clinical':sub==='development'?'development':sub));});
+  renderDrawerCourses();
+}
+function renderDrawerCourses(){
+  let html='';
+  for(const[year,courses] of Object.entries(PROGRAMMES[S.subject].courses)){
+    html+=`<div class="drawer-year">${year}</div>`;
+    courses.forEach(c=>{html+=`<div class="drawer-course" onclick="drawerPickCourse(this,'${c.replace(/'/g,"\\'")}') ">${c}</div>`;});
+  }
+  document.getElementById('drawerCourseList').innerHTML=html;
+}
+function drawerPickCourse(el,course){
+  document.querySelectorAll('.drawer-course').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  S.topics.add(course);syncStats();
+  document.getElementById('input').value=`Teach me about "${course}" with African/Zambian examples`;
+  closeDrawer();
+  document.getElementById('input').focus();
+}
+function mobNav(page){
+  document.querySelectorAll('.mob-btn').forEach(b=>b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
 }
 function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,130)+'px';}
-renderCourses();renderStarters();
+renderCourses();renderStarters();renderDrawerCourses();
 </script>
 </body>
 </html>
